@@ -18,5 +18,5 @@
 - App/Core
   - Includes platform javascript sdk
 
-##### Application Architecture
+### Application Architecture
 Inspired from Facebook Flux's one way flow implemantation. Stores responsible for all data logic and data side effects and components update from stores via Rxjs.
