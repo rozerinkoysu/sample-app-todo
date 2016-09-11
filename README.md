@@ -1,4 +1,4 @@
-## Smartface Platform Tofo Application Example
+## Smartface Platform Todo Application Example
 
 ### Application Skeleton
 - App.js
