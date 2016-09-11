@@ -1,6 +1,7 @@
 ## Smartface Platform Tofo Application Example
 
 #### Application Skeleton
+---
 - App.js
   - Application base
 - Main.js
@@ -19,4 +20,5 @@
   - Includes platform javascript sdk
 
 #### Application Architecture
+---
 Inspired from Facebook Flux's one way flow implemantation. Stores responsible for all data logic and data side effects and components update from stores via Rxjs.
