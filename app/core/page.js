@@ -29,6 +29,10 @@ PageBase.prototype.setEnabled = function(f) {
   this._view.enabled = f;
 };
 
+PageBase.prototype.setRouteParams = function(){
+  
+}
+
 PageBase.prototype.show = function(
     motionEase
   , transitionEffect
@@ -47,7 +51,7 @@ PageBase.prototype.show = function(
   this
     ._view
     .show
-    .call(this._view, args);
+    .apply(this._view, args);
 };
 
 PageBase.prototype.setFillColor = function(color) {};

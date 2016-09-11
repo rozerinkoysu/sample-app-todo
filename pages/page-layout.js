@@ -33,9 +33,6 @@ const PageLayout = function(params) {
   // calls super class constructor
   PageBase.apply(this, [params]);
 
-  SMF.UI.statusBar.visible     = true;
-  // SMF.UI.statusBar.transparent = true;
-  SMF.UI.statusBar.color = "#0079B6"
   const options = {
       visible: true
     , backgroundImage: null
@@ -93,8 +90,11 @@ const PageLayout = function(params) {
   
   // initializes ActionBarWrapper
   var actionBar = ActionWrapper(this._view, options);
-  
+
   this._view.onShow = function(){
+    SMF.UI.statusBar.visible     = true;
+    SMF.UI.statusBar.color       = "#0079B6"
+    SMF.UI.statusBar.transparent = false;
     actionBar.reload();
   }
   
@@ -156,18 +156,19 @@ const PageLayout = function(params) {
   const selectedColor = "#376C7C";
   
   const lastWeekButton       = new SMF.UI.TextButton({
-      fillColor: activeColor
+      fillColor: selectedColor
     , text: "Last Week"
     , width: '40%'
     , height: "100%"
     , touchEnabled: true
     , pressedFillColor: activeColor
   });
+  
   lastWeekButton.text        = "Last Week";
   lastWeekButton.font.size   = "7pt";
   lastWeekButton.font.family = "Roboto";
 
-  const lastMonthButton        = new SMF.UI.TextButton({
+  const lastMonthButton = new SMF.UI.TextButton({
       fillColor: activeColor
     , text: "Last Month"
     , width: '40%'
@@ -179,7 +180,7 @@ const PageLayout = function(params) {
   lastMonthButton.font.size    = "7pt";
   lastMonthButton.font.family  = "Roboto";
 
-  tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByDate()));
+  tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByDate()), "", true);
   tabButtons.add(lastMonthButton, new TaskStatisticsContent(TodoStore.findByDate()));
 
   const deleteTabButtonTouch = tabButtons
@@ -192,10 +193,8 @@ const PageLayout = function(params) {
         e.target.fillColor = selectedColor;
       },
       function(err) {
-        console.log('Error: ' + err);
       },
       function() {
-        console.log('Completed');
       });
   
   _sliderDrawer.add(tabButtons);

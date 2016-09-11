@@ -1,6 +1,6 @@
 const Component  = require("../component.js");
 const Rx         = require("../../../libs/rx.all.js");
-const SMFConsole = require("../log.js");
+// const SMFConsole = require("../log.js");
 
 // Compose
 const tabButtonTouchHandlerComposer = function(change$){
@@ -16,7 +16,7 @@ const tabButtonTouchHandlerComposer = function(change$){
           , current: _current
           , name: name
         });
-        
+      
       if(_current){
         _current.touchEnabled = true;
       }
@@ -47,7 +47,7 @@ const addContentComposer = function(parentAdd, params){
   };
 };
 
-// creates change content function
+// compose change content handler
 const changeContentComposer = function(addContent){
   var rm;
   
@@ -68,7 +68,7 @@ const changeContentComposer = function(addContent){
   };
 };
 
-// creates composition to add tab button
+// composes to add tab button
 const tabButtonAddComposer = function(parentAdd, params){
   const container = new SMF.UI.Container(params); 
   parentAdd(container);
@@ -116,14 +116,19 @@ TabButtonGroup.prototype.changeTab = function(index){
 TabButtonGroup.prototype = Object.create(Component.prototype);
 
 // Overrides add method
-TabButtonGroup.prototype.add = function(button, content, name){
-  button.onTouch = this
+TabButtonGroup.prototype.add = function(button, content, name, isSelected){
+  const onTouch = this
     ._buttonTouchHandler(
           name
         , this._changeContent(content)
       );
-
+  
+  button.onTouch = onTouch;
+  
   this._tabButtonAdd(button);
+  
+  if(isSelected)
+    onTouch.call(button);
 };
 
 // returns change handler stream

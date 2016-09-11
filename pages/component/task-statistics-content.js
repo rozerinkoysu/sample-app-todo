@@ -18,12 +18,18 @@ const TaskStatisticsContent = function(finder) {
   const _that = this;
   // invalidates component
   const update = function() {
+    // Get grouped todo data by type
     const grouped = TodoStore.groupByPropName("type")(TodoStore.find(finder));
+    // clear present components
     _that.clear();
+    // loop grouped data
     Object.keys(grouped)
       .forEach(function(key) {
+        // creates progressbar instance
         var bar = new TaskProgressBarComp(key, grouped[key]);
+        // then add to component view
         _that.add(bar);
+        // and add to progressbar collection
         _that._items.push(bar);
       });
   };
@@ -46,7 +52,7 @@ TaskStatisticsContent.prototype = Object.create(Component.prototype);
 TaskStatisticsContent.prototype.show = function(){
   this._items.forEach(function(bar){
     bar.animate();
-  })
+  });
 };
 
 module.exports = TaskStatisticsContent;

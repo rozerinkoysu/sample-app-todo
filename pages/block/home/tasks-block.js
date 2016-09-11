@@ -33,6 +33,10 @@ const TasksBlock = function(){
     , roundedEdge: 0
   });
   
+  if(Device.deviceOS == "Android"){
+    underline.height = 4;
+  }
+  
   // creates onTabChange handler
   const tabChangeHandler = tabChanger(underline);
   
@@ -53,11 +57,12 @@ const TasksBlock = function(){
     return TodoStore.findByStatus(state.show)(TodoStore.find(TodoStore.findByDate()));
   };
 
-  const todoButton       = new SMF.UI.Label({
+  const todoButton = new SMF.UI.Label({
       height: "10%"
     , top: "23%"
     , left: "10%"
   });
+  
   todoButton.text        = "TO DO";
   todoButton.font.size   = "8pt";
   todoButton.font.bold   = true;
@@ -88,7 +93,7 @@ const TasksBlock = function(){
   completedButton.alpha       = 0.6;
   completedButton.onTouch = tabChangeHandler(
       "33%"
-    , "50%"
+    , "40%"
     , changeState({show: "completed"})
   );
   
@@ -123,7 +128,7 @@ const TasksBlock = function(){
   TodoStore
     .changeHandler$()
     .subscribe(function(){
-      // and update component when todo-store data is changed
+      // and update component when data is changed on todo-store.
       update();
     });
   
@@ -169,7 +174,7 @@ const tabChanger = function(underline) {
         if(current) {
           current.animate({
             property: 'alpha',
-            endValue: 0.2,
+            endValue: 0.6,
             motionEase: SMF.UI.MotionEase.PLAIN,
             duration: 300,
             onFinish: function() {

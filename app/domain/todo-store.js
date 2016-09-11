@@ -1,14 +1,15 @@
 const SMFConsole = require('../core/log.js');
-const Rx = require('../../libs/rx.all.js');
+const Rx         = require('../../libs/rx.all.js');
+const moment     = require("../../libs/moment.js");
 
 const _changeHandler$ = new Rx.Subject();
 
 var data = [
   {
       id: 1
-    , creationDate: "01-09-2016 18:00"
-    , type: "work"
-    , summary: "Checkout Development"
+    , creationDate: moment().add(5,'hours') // "20-09-2016 19:30"
+    , type: "shopping"
+    , summary: "Get groceries from the store"
     , desc: ""
     , isAlarmSet: false
     , alarmRule: ""
@@ -17,9 +18,9 @@ var data = [
   }
   , {
       id: 2
-    , creationDate: "01-09-2016 18:00"
-    , type: "hobby"
-    , summary: "Lunch with Tony"
+    , creationDate: moment().add(1,'days').add(9,'hours')
+    , type: "work"
+    , summary: "Read Smartface University Module 5"
     , desc: ""
     , isAlarmSet: false
     , alarmRule: ""
@@ -28,122 +29,56 @@ var data = [
   }
   , {
       id: 3
-    , creationDate: "01-09-2016 18:00"
-    , type: "hobby"
-    , summary: "Shopping for dinner"
+    , creationDate: moment().add(1,'days').add(1,'hours').add(19,'minutes')
+    , type: "family"
+    , summary: "Dentist’s appointment"
     , desc: ""
     , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
+    , alarmRule: moment().add(1, "w").set("hour", 12).set("minute", 15).toString()
     , isDeleted: false
     , status: "idle"
   }
   , {
       id: 4
-    , creationDate: "01-09-2016 18:00"
-    , type: "shopping"
-    , summary: "Shopping for dinner"
+    , creationDate: moment().add(3,'days').add(9,'hours').add(51,'minutes')
+    , type: "work"
+    , summary: "Book flight tickets to SF"
     , desc: ""
     , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
+    , alarmRule: moment().add(1, "w").set("hour", 12).set("minute", 15).toString()
     , isDeleted: false
     , status: "idle"
   }
   , {
       id: 5
-    , creationDate: "01-09-2016 18:00"
-    , type: "work"
-    , summary: "Shopping for dinner"
+    , creationDate: moment().add(2,'months').add(9,'days').add(1,'hours').add(33,'minutes')
+    , type: "payment"
+    , summary: "Get some gifts for holidays"
     , desc: ""
     , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
+    , alarmRule: moment().add(1, "w").set("hour", 12).set("minute", 15).toString()
     , isDeleted: false
     , status: "idle"
   }
   , {
       id: 6
-    , creationDate: "01-09-2016 18:00"
+    , creationDate: moment().subtract(4,'days').add(1,'hours').add(33,'minutes')
     , type: "hobby"
-    , summary: "Shopping for dinner"
+    , summary: "Follow-up mobile app development project"
     , desc: ""
     , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
+    , alarmRule: moment().add(1, "d").set("hour", 10).set("minute", 30).toString()
     , isDeleted: false
     , status: "completed"
   }
   , {
       id: 7
-    , creationDate: "01-09-2016 18:00"
-    , type: "hobby"
-    , summary: "Shopping for dinner"
-    , desc: ""
-    , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
-    , isDeleted: false
-    , status: "idle"
-  }
-  , {
-      id: 8
-    , creationDate: "01-09-2016 18:00"
-    , type: "hobby"
-    , summary: "Shopping for dinner"
-    , desc: ""
-    , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
-    , isDeleted: false
-    , status: "completed"
-  }
-  , {
-      id: 9
-    , creationDate: "01-09-2016 18:00"
+    , creationDate: moment().subtract(7,'days').subtract(3,'hours').subtract(12,'minutes')
     , type: "shopping"
     , summary: "Shopping for dinner"
     , desc: ""
     , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
-    , isDeleted: false
-    , status: "idle"
-  }
-  , {
-      id: 10
-    , creationDate: "01-09-2016 18:00"
-    , type: "sport"
-    , summary: "Shopping for dinner"
-    , desc: ""
-    , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
-    , isDeleted: false
-    , status: "idle"
-  }
-  , {
-      id: 11
-    , creationDate: "01-09-2016 18:00"
-    , type: "sport"
-    , summary: "Shopping for dinner"
-    , desc: ""
-    , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
-    , isDeleted: false
-    , status: "idle"
-  }
-  , {
-      id: 12
-    , creationDate: "01-09-2016 18:00"
-    , type: "shopping"
-    , summary: "Shopping for dinner"
-    , desc: ""
-    , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
-    , isDeleted: false
-    , status: "completed"
-  }
-  , {
-      id: 13
-    , creationDate: "01-09-2016 18:00"
-    , type: "family"
-    , summary: "Shopping for dinner"
-    , desc: ""
-    , isAlarmSet: true
-    , alarmRule: "01-09-2016 17:00"
+    , alarmRule: moment().set("hour", 16).set("minute", 45).toString()
     , isDeleted: false
     , status: "completed"
   }
@@ -156,7 +91,7 @@ const TodoStore = function() {
 
 TodoStore.findById = function(id) {
   return data.filter(function(todo){ return todo.id == id })[0] || null;
-}
+};
 
 TodoStore.findByStatus = function() {
 };
@@ -169,7 +104,7 @@ TodoStore.find = function(finder) {
 TodoStore.findByDate = function(date, condition) {
   return function(data){
     return copyof(data);
-  }
+  };
 };
 
 TodoStore.findByType = function(type) {
@@ -178,7 +113,7 @@ TodoStore.findByType = function(type) {
       data
         .filter(filterByProp("type", type, "eq"))
         );
-  }
+  };
 };
 
 TodoStore.findByStatus = function(status) {
@@ -206,17 +141,22 @@ TodoStore.groupByPropName = function(propName){
 };
 
 TodoStore.add = function(newData) {
-  newData = Object.assign({}, newData);
+  const initialData = {
+      alarmRule: ""
+    , isAlarmSet: false
+  }
+  
+  newData = Object.assign(initialData, newData);
 
-  newData.id = data.length;
-  newData.status = "idle";
-  newData.isDeleted = false;
+  newData.id           = data.length;
+  newData.status       = "idle";
+  newData.isDeleted    = false;
+  newData.creationDate = moment().toString();
 
   data = [newData].concat(data);
   
   _changeHandler$.onNext();
   
-  // debug(data);
   return newData.id;
 };
 
@@ -236,15 +176,15 @@ TodoStore.completeTask = function(id){
   updateTask({id: id, status: "completed"});
 };
 
-const sortBy = function(propName){
-  return data.reduce(function(prev, curr, i){
-    if(prev.length > 0){
+// const sortBy = function(propName){
+//   return data.reduce(function(prev, curr, i){
+//     if(prev.length > 0){
       
-    }
-    prev = [curr].concat(prev);
-    return prev;
-  }, []);
-}
+//     }
+//     prev = [curr].concat(prev);
+//     return prev;
+//   }, []);
+// }
 
 const updateTask = function(update){
   if(typeof update.id === "undefined"){

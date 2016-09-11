@@ -13,7 +13,7 @@ const NewTodoTitleBar = function(params) {
     , image: "dashed.png"
     , top: 0
     , left: 0
-    , imageFillType: SMF.UI.ImageFillType.ASPECTFIT
+    , imageFillType: SMF.UI.ImageFillType.TILE
   });
   
   var titleLbl = new SMF.UI.Label({
@@ -38,7 +38,7 @@ const NewTodoTitleBar = function(params) {
   dateLbl.font.family = "Roboto";
   dateLbl.fontColor   = "#9E9E9E";
 
-  titleLbl.font.size   = "12pt";
+  titleLbl.font.size   = "10pt";
   titleLbl.font.family = "Roboto";
   titleLbl.fontColor   = "#4A4A4A";
   

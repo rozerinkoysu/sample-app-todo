@@ -15,27 +15,14 @@ const TaskProgressBarComp = function(type, tasks){
   }]);
   
   const icon = new SMF.UI.Image({
-      // left: 0
-      top: 0
-    , width: "75%"
-    , height: "75%"
-    , imageFillType: SMF.UI.ImageFillType.ASPECTFIT
+      left: 0
+    , top: 0
+    , width: "20%"
+    , height: "100%"
     , image: TodoAssetsService.getIcon(type, TodoAssetsService.types.white)
   });
   
-  const iconContainer = new SMF.UI.Container({
-      width: "15%"
-    , height: "85%"
-    , left: 0
-    , top: "12.5%"
-    , borderWidth: 0
-    , layoutAlignment: SMF.UI.LayoutAlignment.CENTER
-    , layoutType: SMF.UI.LayoutType.FLOW
-  });
-  
-  iconContainer.add(icon);
-  
-  this.add(iconContainer);
+  this.add(icon);
   
   const rectangle = new SMF.UI.Rectangle({
       top: "12%"

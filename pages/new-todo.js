@@ -7,6 +7,8 @@ const ChildPageHeader   = require("./block/layout/child-page-header.js");
 const Router            = require("../app/core/router.js");
 const NewTodoTitleBar   = require("./component/new-todo-title-bar.js");
 const TodoStore         = require("../app/domain/todo-store.js");
+const SetAlarmRule      = require("./component/set-alarm-rule.js");
+const TodoService         = require("../app/domain/todo-service.js");
 
 // Composes icon button builder
 const createIconButton = function(params) {
@@ -29,7 +31,7 @@ const createIconButton = function(params) {
     params = Object.assign({
         top: 0
       , left: 0
-      , height: "100%"
+      , height: "80%"
       , width: "100%"
       , 
     }
@@ -39,9 +41,23 @@ const createIconButton = function(params) {
       , touchEnabled: false
     });
     
+    const iconText = new SMF.UI.Label({
+        width: "80%"
+      , height: "60%"
+      , top: "45%"
+      , text: item.name.toUpperCase()
+      , fontColor: "#ffffff"
+      , textAlignment: SMF.UI.TextAlignment.CENTER
+      , touchEnabled: false
+    });
+    
+    iconText.font.family = "Roboto";
+    iconText.font.size = "5pt"
+    
     const iconContainer = new SMF.UI.Container(containerParams);
     const icon = new SMF.UI.Image(params);
     iconContainer.add(icon);
+    iconContainer.add(iconText);
     
     return iconContainer;
   };
@@ -50,24 +66,25 @@ const createIconButton = function(params) {
 // Composes icon button onSelect behaviour
 const activateIconButton = function(){
   return function() {
-    var activeButtonBg = new SMF.UI.Rectangle({
+    var activeButtonBackgroundRect = new SMF.UI.Rectangle({
         width: "100%"
       , height: "100%"
       , fillColor: "#0079B6"
       , top: 0
       , left: 0
       , roundedEdge: 0
+      , borderWidth: 0
     });
     
-    this.insertAt(activeButtonBg, 0);
+    this.insertAt(activeButtonBackgroundRect, 0);
     
-    activeButtonBg.left = -1 * activeButtonBg.width;
+    activeButtonBackgroundRect.left = -1 * activeButtonBackgroundRect.width;
 
-    activeButtonBg.animate({
+    activeButtonBackgroundRect.animate({
         property: 'left'
       , endValue: 0
       , motionEase: SMF.UI.MotionEase.DECELERATING
-      , duration: 300
+      , duration: 150
       , onFinish: function() {
         //do your action after finishing the animation
       }
@@ -76,15 +93,15 @@ const activateIconButton = function(){
     return function(){
       var remove = this.removeAt.bind(this);
       
-      activeButtonBg.animate({
+      activeButtonBackgroundRect.animate({
           property: 'left'
-        , endValue: activeButtonBg.width
+        , endValue: activeButtonBackgroundRect.width
         , motionEase: SMF.UI.MotionEase.ACCELERATING
-        , duration: 300
+        , duration: 150
         , onFinish: function() {
           remove(0);
           remove = null;
-          activeButtonBg = null;
+          activeButtonBackgroundRect = null;
         }
       });
     }.bind(this);
@@ -97,12 +114,12 @@ const iconButtonSelectHandler = function(itemActivate, onSelect) {
   const selectButton = itemActivate();
   return function(name) {
     deselect();
-    // call icon button select bhaviour
+    // call icon button select bhaviour and assign function that removes button effect
     deselect = selectButton.call(this);
     // trigger onSelect callback
     onSelect.apply(this, [name]);
-  }
-}
+  };
+};
 
 const menuComposer = function(params) {
   const menuContainer = new SMF.UI.Container(params);
@@ -110,14 +127,14 @@ const menuComposer = function(params) {
 
   return function(item){
     menuContainer.add(item);
-  }
-}
+  };
+};
 
 const NewTodoPage = function(params){
   PageBase.apply(this, [{
   }]);
   
-  const pageContainer = new SMF.UI.Container({
+  const pageLayoutContainer = new SMF.UI.Container({
       width: "100%"
     , height: "100%"
     , layoutType: SMF.UI.LayoutType.FLOW
@@ -127,9 +144,6 @@ const NewTodoPage = function(params){
     , verticalGap: 0
     , borderWidth: 0
   });
-  
-  SMF.UI.statusBar.visible     = true;
-  // SMF.UI.statusBar.transparent = true;
   
   const options = {
       visible: true
@@ -183,16 +197,19 @@ const NewTodoPage = function(params){
     
     this._view.actionBar.onHomeIconItemSelected = function () {
       close();
-    }
+    };
   }
   
   const actionWrapper = ActionBarWrapper(this._view, options);
 
   this._view.onShow = function() {
+    SMF.UI.statusBar.visible     = true;
+    SMF.UI.statusBar.color       = "#00A1F1";
+    SMF.UI.statusBar.transparent = false;
     actionWrapper.reload();
   };
   
-  this.add(pageContainer);
+  this.add(pageLayoutContainer);
 
   const newTaskBar = new NewTodoTitleBar({
       // top: "39%"
@@ -216,7 +233,9 @@ const NewTodoPage = function(params){
   
   // pageContainer.add(space);
   
-  const menuItemAdd = menuComposer.apply(pageContainer, [{
+  // composes icon button builder
+  // and sends menu container for adding buttons
+  const menuItemAdd = menuComposer.apply(pageLayoutContainer, [{
       width: "100%"
     , height: "28%"
     // , top: "11%"
@@ -229,22 +248,30 @@ const NewTodoPage = function(params){
     , verticalGap: 0
   }]);
   
+  // Create icon buttons
   const icons =  TodoAssetsService
+    // Gets all icons by type and color
     .getAllIconsByType(TodoAssetsService.types.white)
+    // then creates iconbuttons using icons data
     .map(createIconButton({
+      // when user touchs any button
       onTouch: iconButtonSelectHandler(
-        // icon button onSelect behaviour
+        // then sends selection behaviour
         activateIconButton
-        // icon button onSelect handler
+        // and custom behaviour callback for present button
         , function(name){
+          // assings icon type to current state
           newTaskData.type = name;
+          // creates title 
           const title = "ADD "+name+" TASK";
+          // and prints to infobar
           newTaskBar.setTitle(title.toUpperCase());
         })
     }));
-
+  // maps icons data to icon button builder
   icons.map(menuItemAdd);
   
+  // Create summary text input
   const summary = new SMF.UI.TextBox({
       width: "90%"
     , left: "5%"
@@ -256,6 +283,7 @@ const NewTodoPage = function(params){
     , text: ""
   });
   
+  // Create container for summary text placement
   const summaryContainer = new SMF.UI.Container({
       width: "100%"
     , height: "8.94%"
@@ -264,54 +292,101 @@ const NewTodoPage = function(params){
   
   summaryContainer.add(summary);
 
-  // creates line seperator which it seperates between summary and detail texts
+  // creates line seperator which it seperates summary and detail texts
   const seperator = new SMF.UI.Rectangle({
       left: 0
     // , top: 
     , height: "1"
     , width: "100%"
-    , fillColor: "#000000"
+    , borderColor: "#DFDFDF"
   });
   
   // create todo detail text container
   const detailContainer = new SMF.UI.Container({
       width: "100%"
-    , height: "20%"
+    , height: "40%"
     , borderWidth: 0
   });
   
-  // creates todo detail text
+  // creates todo detail textbox
   const detailtext = new SMF.UI.TextBox({
       width: "90%"
     , left: "5%"
-    , top: 0
-    , height: "100%"
+    , top: "10%"
+    , height: "90%"
     , borderWidth: 0
     , placeHolder: "Add details"
     , placeHolderTextColor: "#4A4A4A"
+    , textAlignment: SMF.UI.TextAlignment.TOP
     , text: ""
   });
   
   // then adds detailtext to contaier
   detailContainer.add(detailtext);
   
-  // add children to pagecontainer
-  pageContainer.add(newTaskBar._view);
-  pageContainer.add(summaryContainer);
-  pageContainer.add(seperator);
-  pageContainer.add(detailContainer);
+  const alarmRuleComp = new SetAlarmRule({
+        width: "100%"
+      , height: "7%"
+      , borderWidth: 0
+    }
+    , false
+    , true
+  );
   
-  // Saves current data and routes to homepage
+  alarmRuleComp.onChange().subscribe(function(rule){
+    newTaskData.isAlarmSet = true
+    newTaskData.alarmRule = rule;
+  })
+  
+  // add children to pageLayoutContainer
+  pageLayoutContainer.add(newTaskBar._view);
+  pageLayoutContainer.add(seperator.clone());
+  pageLayoutContainer.add(summaryContainer);
+  pageLayoutContainer.add(seperator);
+  pageLayoutContainer.add(detailContainer);
+  pageLayoutContainer.add(seperator.clone());
+  pageLayoutContainer.add(alarmRuleComp._view);
+  
+  // Saves current data then routes to homepage
   function save(){
-      newTaskData.summary = summary.text;
-      newTaskData.desc    = detailtext.text;
-      newTaskData.status = "idle";
-      TodoStore.add(newTaskData);
-      Router.go("home");
+    // If new task type is not be selected
+    if(!newTaskData.type) {
+      // then alert warning message
+      alert("Please select a Todo Type from Types Menu.");
+      // and break saving
+      return;
+      // Else if summary is not inputed by user
+    } else if(!summary.text) {
+      // then alert warning message
+      alert("Please fill in the summary field.");
+      // and break saving
+      return;
+    } 
+    // else if(!detailtext.text){
+    //   alert("Please fill in the details field.");
+    //   return;
+    // }
+    
+    // saves user data
+    newTaskData.summary = summary.text;
+    newTaskData.desc    = detailtext.text;
+    newTaskData.status  = "idle";
+    
+    if(newTaskBar.isAlarmSet){
+      TodoService.setLocalNotification(newTaskBar.alarmRule, newTaskBar.summary, "SMF Todo Reminder");
+    }
+    
+    // and create new todo item in the data-store
+    TodoStore.add(newTaskData);
+    // Router.go("home");
+    // then back to home
+    close();
   }
   
+  
   function close(){
-    Router.go("home");
+    Router.back();
+    // Router.go("home");
   }
 };
 

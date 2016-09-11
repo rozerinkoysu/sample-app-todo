@@ -8,7 +8,6 @@ var HomePage = function() {
   PageLayout.apply(this, [{
       name: "homePage"
     , fillColor: "#ffffff"
-    , onShow: onShow
   }]);
   
   try{
@@ -32,9 +31,6 @@ var HomePage = function() {
     SMFConsole.error("[HomePage]", e);
   }
 };
-
-function onShow() {
-}
 
 HomePage.prototype = Object.create(PageLayout.prototype);
 
