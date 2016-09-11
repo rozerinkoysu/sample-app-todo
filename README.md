@@ -1,7 +1,6 @@
 ## Smartface Platform Tofo Application Example
 
-#### Application Skeleton
--
+### Application Skeleton
 - App.js
   - Application base
 - Main.js
