@@ -133,7 +133,7 @@ TabButtonGroup.prototype.add = function(button, content, name, isSelected){
 
 // returns change handler stream
 TabButtonGroup.prototype.changeHandler = function(){
-  // When it triggers user press another button
+  // triggers stream When user presses button is not selected
   return this
     ._change$
     .distinctUntilChanged()
