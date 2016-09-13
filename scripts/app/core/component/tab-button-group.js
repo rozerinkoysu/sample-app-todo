@@ -2,7 +2,7 @@ const Component  = require("../component.js");
 const Rx         = require("../../../libs/rx.all.js");
 // const SMFConsole = require("../log.js");
 
-// Compose
+// Compose 
 const tabButtonTouchHandlerComposer = function(change$){
   // current state
   var _current;
@@ -88,7 +88,7 @@ const TabButtonGroup = function(params, tabButtonsContainerProps, contentContain
   this._change$            = new Rx.Subject();
   this._buttonTouchHandler = tabButtonTouchHandlerComposer(this._change$);
   
-  // method is to add new tab-button
+  // compose method is to add new tab-button
   this._tabButtonAdd = 
     tabButtonAddComposer(
         Component.prototype.add.bind(this)
@@ -96,7 +96,7 @@ const TabButtonGroup = function(params, tabButtonsContainerProps, contentContain
       , tabButtonsContainerProps
       );
     
-  // method is to change tab content
+  // compose method is to change tab content
   this._changeContent = 
     changeContentComposer(
       addContentComposer(
