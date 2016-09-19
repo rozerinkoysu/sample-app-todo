@@ -63,7 +63,7 @@ const PageLayout = function(params) {
     //   })
     //   .share();
       
-  if(Device.deviceOS == "iOS"){
+  if(Device.deviceOS == "iOS") {
     options.ios = {
         rightBarButtonItems: []
       , leftBarButtonItems: [new SMF.UI.iOS.BarButtonItem({
@@ -238,7 +238,7 @@ const PageLayout = function(params) {
 // extends from PageBase Class
 PageLayout.prototype = Object.create(PageBase.prototype);
 
-// Overrides super class's add method
+// Overrides super class's add method,
 PageLayout.prototype.add = function(content) {
   if (content instanceof AbstractComponent) {
     this._contentContainer.add(content._view);

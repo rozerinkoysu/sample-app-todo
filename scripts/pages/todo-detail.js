@@ -6,7 +6,7 @@ const Router            = require("../app/core/router.js");
 const TodoStore         = require("../app/domain/todo-store.js");
 const TodoDetailInfoBar = require("./component/todo-detail-info-bar.js");
 const SetAlarmRule      = require("./component/set-alarm-rule.js");
-const TodoService         = require("../app/domain/todo-service.js");
+const TodoService       = require("../app/domain/todo-service.js");
 
 const TodoDetailPage = function() {
   PageBase.apply(this, []);
@@ -18,7 +18,7 @@ const TodoDetailPage = function() {
   // _actionBar.addMenuItem();
   // _actionBar.setB
   
-  function update(){
+  function update() {
     headText.text = currentTask.summary;
     descText.text = currentTask.desc;
     infoBar.setProps(
@@ -184,7 +184,7 @@ const TodoDetailPage = function() {
     
     this._view.actionBar.onHomeIconItemSelected = function () {
       close();
-    }
+    };
   }
   
   const actionWrapper = ActionBarWrapper(this._view, options);
@@ -223,14 +223,16 @@ const TodoDetailPage = function() {
     }
   );
   
-  alarmRuleComp.onChange().subscribe(function(rule){
-    if(rule){
-      currentTask.isAlarmSet = true;
-      currentTask.alarmRule  = rule;
-      TodoStore.save(currentTask);
-      TodoService.setLocalNotification(rule, currentTask.summary, "SMF Todo Reminder");
-    }
-  });
+  alarmRuleComp
+    .onChange()
+    .subscribe(function(rule){
+      if(rule){
+        currentTask.isAlarmSet = true;
+        currentTask.alarmRule  = rule;
+        TodoStore.save(currentTask);
+        TodoService.setLocalNotification(rule, currentTask.summary, "SMF Todo Reminder");
+      }
+    });
   
   headContainer.add(headText);
   pageContainer.add(headContainer);

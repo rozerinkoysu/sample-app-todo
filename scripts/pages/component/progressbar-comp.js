@@ -59,21 +59,17 @@ const TaskProgressBarComp = function(type, tasks) {
   this.add(barContainer);
   
   // Calculates progressbar current width.
-  var calculateProgressBarWidth = function() {
-    return 0;
-  };
+  var curentWidth = 0;
   
   // Gets current completed tasks
   // const completedTasks = tasks.filter(function(task){ return task.status == "completed"});
-  rectangle.width = calculateProgressBarWidth();
+  rectangle.width = curentWidth;
   
   // rectangle.width = 1;
   
   this.setProps = function(max, current) {
     // updates progressbar width calculation logic
-    calculateProgressBarWidth = function(){
-      return ((current * 77) / max )+"%";
-    };
+    curentWidth = ((current * 77) / max )+"%";
   };
 
   this._view.onShow = function() {
@@ -84,14 +80,13 @@ const TaskProgressBarComp = function(type, tasks) {
     rectangle.width = 1;
     rectangle.animate({
       property: 'width',
-      endValue: calculateProgressBarWidth(),
+      endValue: curentWidth,
       motionEase: SMF.UI.MotionEase.DECELERATING,
       duration: 300,
       onFinish: function() {
       }
     });
   };
-
 };
 
 TaskProgressBarComp.prototype = Object.create(Component.prototype);

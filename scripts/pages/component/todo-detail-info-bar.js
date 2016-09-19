@@ -104,8 +104,8 @@ const TodoDetailInfoBar = function(params){
   this.setProps = function(image, type, date){
     typeIcon.image = image;
     typeText.text = type;
-    dayLbl.text = moment(date).format('dddd')
-    dateLbl.text = moment(date).format('LL')
+    dayLbl.text = moment(date).format('dddd');
+    dateLbl.text = moment(date).format('LL');
   };
   
   this.add(iconContainer);

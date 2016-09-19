@@ -171,15 +171,16 @@ const TasksList = function(params){
       function makeShorter(summary){
         return (summary.length > 29) ? summary.substring(0, 26)+"..." : summary;
       }
+      
       this.controls[0].image = TodoAssetsService.getIcon(tasks[e.rowIndex].type, TodoAssetsService.types.black);
       this.controls[1].text  = makeShorter(tasks[e.rowIndex].summary);
       
-      if(tasks[e.rowIndex].isAlarmSet){
+      if(tasks[e.rowIndex].isAlarmSet) {
         this.controls[2].visible = true;
         this.controls[3].text  = TodoService.dateToCalendarText(tasks[e.rowIndex].alarmRule);
       } else {
         this.controls[2].visible = false;
-        this.controls[3].text = ""
+        this.controls[3].text = "";
       }
     };
   };

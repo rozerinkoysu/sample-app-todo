@@ -69,6 +69,7 @@ const TasksBlock = function(){
   todoButton.font.family = "Roboto";
   todoButton.fontColor   = "#ffffff";
   // todoButton.width       = "30%";
+  // compose todoButton onTouchHandler
   todoButton.onTouch     = tabChangeHandler(
       "5%"
     , "30%"
@@ -91,15 +92,13 @@ const TasksBlock = function(){
   // completedButton.top         = "23%";
   // completedButton.left        = "40%";
   completedButton.alpha       = 0.6;
+  // compose completedButton onTouchHandler
   completedButton.onTouch = tabChangeHandler(
-      "33%"
+      "37.5%"
     , "40%"
     , changeState({show: "completed"})
   );
   
-  // tabButtons.add(todoButton);
-  
-  // this.add(tabButtons);
   // create today-bar component
   const todayBar = new TodayBar({
       width: "100%"
@@ -107,7 +106,6 @@ const TasksBlock = function(){
     , top: "32%"
     , left: 0
   });
-  
   // and add to current component as a child
   this.add(todayBar);
   
