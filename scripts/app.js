@@ -13,6 +13,7 @@ Application.onStart 				 = Application_OnStart;
  * @this Application
  */
 function Application_OnStart(e) {
+	//initializes require
 	initRequire("./main.js");
 }
 

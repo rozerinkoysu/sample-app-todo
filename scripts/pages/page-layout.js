@@ -1,3 +1,11 @@
+/*
+  PageLayout is the base class of application parent pages. It is the best 
+  practice of page layout implemantation. Child classes which is 
+  extended from this class inherits common parts and behaviours of layout
+  for example Actionbar, Sliderdrawer, HeaderBlock etc. Child class 
+  content is added to ContentContainer component.
+*/
+
 const PageBase              = require("../app/core/page.js");
 const HeaderBlock           = require("./block/layout/header-block.js");
 const SMFConsole            = require("../app/core/log.js");
@@ -230,7 +238,7 @@ const PageLayout = function(params) {
 // extends from PageBase Class
 PageLayout.prototype = Object.create(PageBase.prototype);
 
-// overrides super class's add method
+// Overrides super class's add method
 PageLayout.prototype.add = function(content) {
   if (content instanceof AbstractComponent) {
     this._contentContainer.add(content._view);
