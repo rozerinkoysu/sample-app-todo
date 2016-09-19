@@ -1,4 +1,7 @@
-/* globals */
+/* 
+  New Todo Creation Child Page
+*/
+
 const PageBase          = require("../app/core/page.js");
 const ActionBarWrapper  = require("../app/core/action-bar.js");
 const TodoAssetsService = require("../app/domain/todo-assets-service.js");

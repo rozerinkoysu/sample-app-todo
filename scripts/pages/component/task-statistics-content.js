@@ -1,3 +1,7 @@
+/*
+  Tasks statuses report component in SliderDrawer Component
+*/
+
 const TaskProgressBarComp = require("./progressbar-comp.js");
 const Component           = require("../../app/core/component.js");
 const SMFConsole          = require("../../app/core/log.js");
@@ -20,6 +24,7 @@ const TaskStatisticsContent = function(finder) {
   const update = function() {
     // Get grouped todo data by type
     const grouped = TodoStore.groupByPropName("type")(TodoStore.find(finder));
+    _that._items = [];
     // clear present components
     _that.clear();
     // loop grouped data
@@ -27,6 +32,10 @@ const TaskStatisticsContent = function(finder) {
       .forEach(function(key) {
         // creates progressbar instance
         var bar = new TaskProgressBarComp(key, grouped[key]);
+        // Gets completed tasks
+        var completedTasks = grouped[key].filter(function(task){ return task.status == "completed"});
+        // update progressbar props
+        bar.setProps(completedTasks.length, grouped[key].length);
         // then add to component view
         _that.add(bar);
         // and add to progressbar collection

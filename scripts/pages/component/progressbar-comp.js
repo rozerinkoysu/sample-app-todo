@@ -1,7 +1,11 @@
+/*
+  ProgressBar component
+*/
+
 const Component = require('../../app/core/component.js');
 const TodoAssetsService = require("../../app/domain/todo-assets-service.js")
 
-const TaskProgressBarComp = function(type, tasks){
+const TaskProgressBarComp = function(type, tasks) {
   
   Component.apply(this, [{
       width: '98%'
@@ -54,33 +58,41 @@ const TaskProgressBarComp = function(type, tasks){
   barContainer.add(rectangle);
   this.add(barContainer);
   
-  const completedTasks = tasks.filter(function(task){ return task.status == "completed"});
-  const w = ((completedTasks.length * 77) / tasks.length )+"%";
-  rectangle.width = w;
+  // Calculates progressbar current width.
+  var calculateProgressBarWidth = function() {
+    return 0;
+  };
+  
+  // Gets current completed tasks
+  // const completedTasks = tasks.filter(function(task){ return task.status == "completed"});
+  rectangle.width = calculateProgressBarWidth();
   
   // rectangle.width = 1;
   
-  this._view.onShow = function(){
+  this.setProps = function(max, current) {
+    // updates progressbar width calculation logic
+    calculateProgressBarWidth = function(){
+      return ((current * 77) / max )+"%";
+    };
+  };
+
+  this._view.onShow = function() {
     this.animate();
-  }
+  };
   
   this.animate = function() {
     rectangle.width = 1;
     rectangle.animate({
       property: 'width',
-      endValue: ((completedTasks.length * 77) / tasks.length )+"%",
+      endValue: calculateProgressBarWidth(),
       motionEase: SMF.UI.MotionEase.DECELERATING,
       duration: 300,
       onFinish: function() {
-          //do your action after finishing the animation
       }
     });
   };
 
 };
-
-// TaskProgressBarComp.prototype.setSize = function(value){
-// };
 
 TaskProgressBarComp.prototype = Object.create(Component.prototype);
 

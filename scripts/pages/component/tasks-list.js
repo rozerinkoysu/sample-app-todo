@@ -5,22 +5,23 @@ const SMFConsole        = require("../../app/core/log.js");
 const Router            = require("../../app/core/router.js");
 const TodoService       = require("../../app/domain/todo-service.js");
 
+/*
 const createSwipeRect = function(props){
   if(Device.deviceOS == "iOS"){
     return new SMF.UI.RepeatBoxSwipeItem(props);
   } else {
     return new SMF.UI.Rectangle(props);
   }
-}
+};
 
 const createSwipeImage = function(props){
   if(Device.deviceOS == "iOS"){
     return new SMF.UI.RepeatBoxSwipeItem(props);
   } else {
-    return new SMF.UI.Image(props)
+    return new SMF.UI.Image(props);
   }
-}
-
+};
+*/
 const TasksList = function(params){
   Component.apply(this, [params]);
   var _tasks;
@@ -168,7 +169,7 @@ const TasksList = function(params){
 
     rBox.onRowRender = function (e) {
       function makeShorter(summary){
-        return (summary.length > 32) ? summary.substring(0, 29)+"..." : summary;
+        return (summary.length > 29) ? summary.substring(0, 26)+"..." : summary;
       }
       this.controls[0].image = TodoAssetsService.getIcon(tasks[e.rowIndex].type, TodoAssetsService.types.black);
       this.controls[1].text  = makeShorter(tasks[e.rowIndex].summary);

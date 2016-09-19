@@ -1,6 +1,8 @@
+/*
+  Application SliderDrawer Wrapper Component
+*/
+
 const SliderDrawerComp = require("../../app/core/component/slider-drawer.js");
-// const TodoStore = require("../app/domain/todo-store.js");
-// const TaskStatisticsComp = require("./task-statistics-comp.js");
 
 const AppSliderDrawerMenu = function(params, props){
   SliderDrawerComp.apply(this, [params]);
