@@ -8,6 +8,9 @@ const TodoDetailInfoBar = require("./component/todo-detail-info-bar.js");
 const SetAlarmRule      = require("./component/set-alarm-rule.js");
 const TodoService       = require("../app/domain/todo-service.js");
 
+/**
+ * Shows todo details which is specified by todo id
+ */
 const TodoDetailPage = function() {
   PageBase.apply(this, []);
   
@@ -18,6 +21,7 @@ const TodoDetailPage = function() {
   // _actionBar.addMenuItem();
   // _actionBar.setB
   
+  // invalidates component
   function update() {
     headText.text = currentTask.summary;
     descText.text = currentTask.desc;
@@ -58,12 +62,11 @@ const TodoDetailPage = function() {
     , horizontalGap: 0
     , verticalGap: 0
   });
-  
 
   const headText = new SMF.UI.Label({
       multipleLine: true
     , left: "10%"
-    , top: "15%"
+    , top: "5%"
     , text: ""
     , height: "100%"
     , fontColor: "#ffffff"
@@ -72,9 +75,6 @@ const TodoDetailPage = function() {
     , textAlignment: SMF.UI.TextAlignment.LEFT
   });
 
-  headText.font.size = "12pt";
-  headText.font.family = "Roboto";
-  
   const descTextTitle = new SMF.UI.Label({
       text: "DETAILS"
     , height: "15%"
@@ -104,6 +104,9 @@ const TodoDetailPage = function() {
     , layoutAlignment: SMF.UI.LayoutAlignment.CENTER
   });
   
+  headText.font.size = "12pt";
+  headText.font.family = "Roboto";
+  
   descTextContainer.add(descTextTitle);
   descTextContainer.add(descText);
   
@@ -112,12 +115,13 @@ const TodoDetailPage = function() {
   //   , height: "14%"
   // });
   
+  // sets routing params, invalidate page
   this.setRouteParams = function(params){
     currentTask = TodoStore.findById(params.id);
     update(params);
   };
     
-  // Action and Navigation bar configuration
+  // Configuration Action and Navigation bar
   const options = {
       visible: true
     , backgroundImage: null
@@ -140,7 +144,7 @@ const TodoDetailPage = function() {
               deleteTask()
             }
           })
-        ]
+      ]
       , leftBarButtonItems: [
           new SMF.UI.iOS.BarButtonItem({
             image : "page_close.png"
@@ -187,16 +191,20 @@ const TodoDetailPage = function() {
     };
   }
   
+  // Initializes Action and Navgitation bar
+  // And returns wrapping object
   const actionWrapper = ActionBarWrapper(this._view, options);
+  
+  // End of the Configuration Action and Navigation bar
 
+  // when page is showed
   this._view.onShow = function() {
+    // configure statusbar
     SMF.UI.statusBar.visible     = true;
     SMF.UI.statusBar.transparent = false;
     SMF.UI.statusBar.color       = "#059466";
-
+    // reload current actionbr configuration using wrapper
     actionWrapper.reload();
-    // _actionBar.transparent(0.2);
-    // _actionBar.setOverlay(true);
   };
   
   const infoBar = new TodoDetailInfoBar({
@@ -208,6 +216,7 @@ const TodoDetailPage = function() {
     , borderWidth: 0
   });
   
+  // Creates line to seperate ui components
   const seperator = new SMF.UI.Rectangle({
       left: 0
     // , top: 
@@ -215,7 +224,8 @@ const TodoDetailPage = function() {
     , width: "100%"
     , borderColor: "#DFDFDF"
   });
-
+  
+  // Alarm rule configuration component
   const alarmRuleComp = new SetAlarmRule({
         width: "100%"
       , height: "7%"
@@ -223,13 +233,16 @@ const TodoDetailPage = function() {
     }
   );
   
+  // when user change the alarm rule state
   alarmRuleComp
     .onChange()
     .subscribe(function(rule){
       if(rule){
+        // updates current todo data
         currentTask.isAlarmSet = true;
         currentTask.alarmRule  = rule;
         TodoStore.save(currentTask);
+        // and create local notification by rule
         TodoService.setLocalNotification(rule, currentTask.summary, "SMF Todo Reminder");
       }
     });
@@ -240,17 +253,20 @@ const TodoDetailPage = function() {
   pageContainer.add(descTextContainer);
   pageContainer.add(seperator);
   pageContainer.add(alarmRuleComp._view);
-
+  
+  // hides current page and routes to back
   function close(){
     // Router.go("home");
     Router.back();
   }
   
+  // removes current todo by id and triggers close method
   function deleteTask(){
     TodoStore.deleteTask(currentTask.id);
     close();
   }
   
+  // set todo status as completed and triggers close method
   function completeTask(){
     TodoStore.completeTask(currentTask.id);
     close();

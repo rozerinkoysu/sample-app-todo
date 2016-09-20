@@ -20,13 +20,14 @@ const TaskStatisticsContent = function(finder) {
   this._items = [];
   // saves curent scope
   const _that = this;
+  
   // invalidates component
   const update = function() {
     // Get grouped todo data by type
     const grouped = TodoStore.groupByPropName("type")(TodoStore.find(finder));
 
     _that._items = [];
-    // clear present components
+    // clear progressbars of component
     _that.clear();
     // loop grouped data
     Object.keys(grouped)
