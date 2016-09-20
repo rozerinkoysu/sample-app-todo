@@ -15,13 +15,7 @@ const AppSliderDrawerMenu = function(params, props){
     , image: "Bg.png"
     , imageFillType: SMF.UI.ImageFillType.STRETCH
   });
-/*  const todoStore = new TodoStore();
-  const lastWeekTasks = todoStore.getAllLastWeek();
-  
-  const lastWeekTasksPage = new TaskStatisticsComp();
-  lastWeekTasksPage.setData(lastWeekTasks);
-  this.add(lastWeekTasksPage);
-*/
+
   this.add(bgImage);
 }
 

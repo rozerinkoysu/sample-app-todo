@@ -1,5 +1,5 @@
 /*
-  Tasks statuses report component in SliderDrawer Component
+  Tasks statuses report component
 */
 
 const TaskProgressBarComp = require("./progressbar-comp.js");
@@ -31,8 +31,8 @@ const TaskStatisticsContent = function(finder) {
     // loop grouped data
     Object.keys(grouped)
       .forEach(function(key) {
-        // creates progressbar instance
         /**
+         * creates progressbar instance
          * @type {TaskProgressBarComp}
          */
         var bar = new TaskProgressBarComp(key, grouped[key]);
@@ -49,11 +49,13 @@ const TaskStatisticsContent = function(finder) {
   };
   
   try{
+    // initialize component
     update();
-    // listen Todostore data change stream
+    // Subscribes to store data change stream
     TodoStore
       .changeHandler$()
       .subscribe(function() {
+        // and invalidates component when store is changed.
         update();
       });
   } catch(e) {
@@ -63,6 +65,9 @@ const TaskStatisticsContent = function(finder) {
 
 TaskStatisticsContent.prototype = Object.create(Component.prototype);
 
+/**
+ * Triggers progress bars animations of component
+ */
 TaskStatisticsContent.prototype.show = function(){
   this._items.forEach(function(bar){
     bar.animate();

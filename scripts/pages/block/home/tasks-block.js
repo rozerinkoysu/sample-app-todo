@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 const Component  = require("../../../app/core/component.js");
 const TodoStore  = require("../../../app/domain/todo-store.js");
 const TasksList  = require("../../component/tasks-list.js");
@@ -9,7 +5,10 @@ const TodayBar   = require("../../component/today-bar.js");
 const SMFConsole = require("../../../app/core/log.js");
 const Router     = require("../../../app/core/router.js");
 
-// Tasks list block
+/**
+ * Tasks list block
+ * 
+ */
 const TasksBlock = function() {
   
   // Calls super constructor
