@@ -8,6 +8,7 @@ var data = [
   {
       id: 1
     , creationDate: moment().add(5,'hours') // "20-09-2016 19:30"
+    , completionDate: ""
     , type: "shopping"
     , summary: "Get groceries from the store"
     , desc: ""
@@ -18,7 +19,8 @@ var data = [
   }
   , {
       id: 2
-    , creationDate: moment().add(1,'days').add(9,'hours')
+    , creationDate: moment().subtract(2,'weeks').toString()
+    , completionDate: moment().subtract(1,'week').toString()
     , type: "work"
     , summary: "Read Smartface University Module 5"
     , desc: ""
@@ -29,7 +31,7 @@ var data = [
   }
   , {
       id: 3
-    , creationDate: moment().add(1,'days').add(1,'hours').add(19,'minutes')
+    , creationDate: moment().add(1,'days').add(1,'hours').add(19,'minutes').subtract(2, "weeks").toString()
     , type: "family"
     , summary: "Dentist’s appointment"
     , desc: ""
@@ -40,7 +42,7 @@ var data = [
   }
   , {
       id: 4
-    , creationDate: moment().add(3,'days').add(9,'hours').add(51,'minutes')
+    , creationDate: moment().add(3,'days').add(9,'hours').add(51,'minutes').subtract(3, "weeks").toString()
     , type: "work"
     , summary: "Book flight tickets to SF"
     , desc: ""
@@ -51,7 +53,7 @@ var data = [
   }
   , {
       id: 5
-    , creationDate: moment().add(2,'months').add(9,'days').add(1,'hours').add(33,'minutes')
+    , creationDate: moment().subtract(1,'hours').add(33,'minutes').toString()
     , type: "payment"
     , summary: "Get some gifts for holidays"
     , desc: ""
@@ -62,7 +64,8 @@ var data = [
   }
   , {
       id: 6
-    , creationDate: moment().subtract(4,'days').add(1,'hours').add(33,'minutes')
+    , creationDate: moment().subtract(4,'days').add(1,'hours').add(33,'minutes').toString()
+    , completionDate: moment().subtract(1,'days').toString()
     , type: "hobby"
     , summary: "Follow-up mobile app development project"
     , desc: ""
@@ -73,7 +76,8 @@ var data = [
   }
   , {
       id: 7
-    , creationDate: moment().subtract(7,'days').subtract(3,'hours').subtract(12,'minutes')
+    , creationDate: moment().subtract(7,'days').subtract(3,'hours').subtract(12,'minutes').toString()
+    , completionDate: moment().subtract(3,'days').toString()
     , type: "shopping"
     , summary: "Shopping for dinner"
     , desc: ""
@@ -86,14 +90,18 @@ var data = [
 
 data.reverse();
 
+/**
+ * Todos data store
+ */
 const TodoStore = function() {
 };
 
+/**
+ * Finds todos by id
+ *
+ */
 TodoStore.findById = function(id) {
   return data.filter(function(todo){ return todo.id == id })[0] || null;
-};
-
-TodoStore.findByStatus = function() {
 };
 
 // Returns copy of last week tasks that they are not deleted by user.
@@ -101,9 +109,25 @@ TodoStore.find = function(finder) {
   return finder(data).filter(filterByProp("isDeleted", false, "eq"));
 };
 
-TodoStore.findByDate = function(date, condition) {
+TodoStore.findByLastWeek = function(fieldName) {
   return function(data){
-    return copyof(data);
+    return data
+        .filter(function(data){
+          return data[fieldName]
+            && moment().diff(moment(data[fieldName]), "weeks") == 0;
+          // moment(data.completionDate).subtract()
+        })
+  };
+};
+
+TodoStore.findByLastMonth = function(fieldName) {
+  return function(data){
+    return data
+        .filter(function(data){
+          return data[fieldName]
+            && moment().diff(moment(data[fieldName]), "months") == 0;
+          // moment(data.completionDate).subtract()
+        })
   };
 };
 

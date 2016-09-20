@@ -61,17 +61,13 @@ const TaskProgressBarComp = function(type, tasks) {
   barContainer.add(rectangle);
   this.add(barContainer);
   
-  // Calculates progressbar current width.
   var curentWidth = 0;
-  
-  // Gets current completed tasks
-  // const completedTasks = tasks.filter(function(task){ return task.status == "completed"});
   rectangle.width = curentWidth;
   
   // rectangle.width = 1;
   
   this.setProps = function(current, max) {
-    // updates progressbar width calculation logic
+    // updates progressbar width
     curentWidth = ((current * 98) / max )+"%";
   };
 

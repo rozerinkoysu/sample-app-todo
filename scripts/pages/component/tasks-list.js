@@ -37,8 +37,6 @@ const TasksList = function(params){
       // , deleteAnimationType: SMF.UI.RepeatBoxRowAnimation.TOP
       , allowDeletingItems: true
       , onSelectedItem: function(e){
-        // SMFConsole.dir(e);
-        // console.log("on selected : "+e.rowIndex+_tasks[e.rowIndex]);
         Router.go("todo/detail", {id: _tasks[e.rowIndex]}.id);
       }
     }

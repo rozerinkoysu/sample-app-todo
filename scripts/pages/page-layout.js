@@ -1,9 +1,9 @@
-/*
-  PageLayout is the base class of application parent pages. It is the best 
-  practice of page layout implemantation. Children classes which is 
-  extended from this class inherits common parts and behaviours of layout
-  for example Actionbar, Sliderdrawer, HeaderBlock etc. Child class 
-  content is added to a separate child container of layout.
+/**
+ *  PageLayout is the base class of application parent pages. It is the best 
+ *  practice of page layout implemantation. Children classes which is 
+ *  extended from this class inherits common parts and behaviours of layout
+ *  for example Actionbar, Sliderdrawer, HeaderBlock etc. Child class 
+ *  content is added to a separate child container of layout.
 */
 
 const PageBase              = require("../app/core/page.js");
@@ -18,7 +18,7 @@ const AbstractComponent     = require("../app/core/abstract-component.js");
 
 // Calls super class's add method
 const superAdd = function(child) {
-  try{
+  try {
     PageBase.prototype.add.apply(this, [child]);
   } catch(e) {
     e.message = child +"  "+e.message;
@@ -187,9 +187,11 @@ const PageLayout = function(params) {
 
   lastMonthButton.font.size    = "7pt";
   lastMonthButton.font.family  = "Roboto";
+  // TodoStore.findByLastMonth("completionDate")(TodoStore.find(TodoStore.findByLastMonth("creationDate"))).map(SMFConsole.dir);
+  // SMFConsole.log(TodoStore.findByLastMonth("completionDate")(TodoStore.find(TodoStore.findByLastMonth("creationDate"))));
 
-  tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByDate()), "", true);
-  tabButtons.add(lastMonthButton, new TaskStatisticsContent(TodoStore.findByDate()));
+  tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByLastWeek("completionDate")), "", true);
+  tabButtons.add(lastMonthButton, new TaskStatisticsContent(TodoStore.findByLastMonth("completionDate")));
 
   const deleteTabButtonTouch = tabButtons
     .changeHandler()

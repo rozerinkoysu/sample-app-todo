@@ -1,12 +1,11 @@
-/*
-  Tasks statuses report component
-*/
-
 const TaskProgressBarComp = require("./progressbar-comp.js");
 const Component           = require("../../app/core/component.js");
 const SMFConsole          = require("../../app/core/log.js");
 const TodoStore           = require("../../app/domain/todo-store.js");
 
+/*
+  Tasks completion report by last week or last month
+*/
 const TaskStatisticsContent = function(finder) {
   Component.apply(this, [{
       width: "98%"
@@ -23,8 +22,13 @@ const TaskStatisticsContent = function(finder) {
   
   // invalidates component
   const update = function() {
-    // Get grouped todo data by type
-    const grouped = TodoStore.groupByPropName("type")(TodoStore.find(finder));
+    // Get grouped todos by type
+    const grouped = TodoStore
+      .groupByPropName("type")(
+        TodoStore.find(
+          TodoStore.findByLastMonth("creationDate")
+        )
+      );
 
     _that._items = [];
     // clear progressbars of component
@@ -33,18 +37,19 @@ const TaskStatisticsContent = function(finder) {
     Object.keys(grouped)
       .forEach(function(key) {
         /**
-         * creates progressbar instance
+         * creates progressbar component
          * @type {TaskProgressBarComp}
          */
         var bar = new TaskProgressBarComp(key, grouped[key]);
         // Gets completed tasks
-        var completedTasks = grouped[key].filter(function(task){ return task.status == "completed"});
+        var completedTasks = finder(grouped[key]);
         // update progressbar width
         bar.setProps(completedTasks.length, grouped[key].length);
-        bar.animate();
-        // then add to component view
+        // add progressbar to component view
         _that.add(bar);
-        // and add to progressbar collection
+        // start progressbar animation
+        bar.animate();
+        // and add to progressbars collection
         _that._items.push(bar);
       });
   };

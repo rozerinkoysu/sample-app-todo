@@ -6,8 +6,7 @@ const SMFConsole = require("../../../app/core/log.js");
 const Router     = require("../../../app/core/router.js");
 
 /**
- * Tasks list block
- * 
+ * User's dashboard
  */
 const TasksBlock = function() {
   
@@ -57,10 +56,7 @@ const TasksBlock = function() {
   };
   
   const getTasks = function(){
-    return TodoStore
-      .findByStatus(state.show)(
-        TodoStore.find(
-        TodoStore.findByDate()));
+    return TodoStore.find(TodoStore.findByStatus(state.show));
   };
   
   /**
@@ -110,14 +106,13 @@ const TasksBlock = function() {
   this.add(todayBar);
   
   // console.log(TodoStore)
-  const tasks = TodoStore.find(TodoStore.findByDate());
   const tasksList = new TasksList({
       width: "100%"
     , height: "53.3%"
     , top: "46.7%"
     , left: 0
     , borderWidth: 0
-  }, tasks);
+  });
   
   tasksList.setTasks(getTasks());
   

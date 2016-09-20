@@ -4,7 +4,7 @@
 
 const SliderDrawerComp = require("../../app/core/component/slider-drawer.js");
 
-const AppSliderDrawerMenu = function(params, props){
+const AppSliderDrawerMenu = function(params, props) {
   SliderDrawerComp.apply(this, [params]);
   
   const bgImage = new SMF.UI.Image({
@@ -17,7 +17,7 @@ const AppSliderDrawerMenu = function(params, props){
   });
 
   this.add(bgImage);
-}
+};
 
 AppSliderDrawerMenu.prototype = Object.create(SliderDrawerComp.prototype);
 
