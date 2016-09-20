@@ -88,7 +88,6 @@ const TodoDetailInfoBar = function(params){
   
   typeText.font.size   = "6pt";
   typeText.font.family = "Roboto";
-
   
   const typeIcon = new SMF.UI.Image({
       width: "100%"
@@ -103,9 +102,9 @@ const TodoDetailInfoBar = function(params){
   
   this.setProps = function(image, type, date){
     typeIcon.image = image;
-    typeText.text = type;
-    dayLbl.text = moment(date).format('dddd');
-    dateLbl.text = moment(date).format('LL');
+    typeText.text  = type;
+    dayLbl.text    = moment(date).format('dddd');
+    dateLbl.text   = moment(date).format('LL');
   };
   
   this.add(iconContainer);

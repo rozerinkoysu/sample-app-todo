@@ -24,6 +24,7 @@ const TaskStatisticsContent = function(finder) {
   const update = function() {
     // Get grouped todo data by type
     const grouped = TodoStore.groupByPropName("type")(TodoStore.find(finder));
+
     _that._items = [];
     // clear present components
     _that.clear();
@@ -31,11 +32,15 @@ const TaskStatisticsContent = function(finder) {
     Object.keys(grouped)
       .forEach(function(key) {
         // creates progressbar instance
+        /**
+         * @type {TaskProgressBarComp}
+         */
         var bar = new TaskProgressBarComp(key, grouped[key]);
         // Gets completed tasks
         var completedTasks = grouped[key].filter(function(task){ return task.status == "completed"});
-        // update progressbar props
+        // update progressbar width
         bar.setProps(completedTasks.length, grouped[key].length);
+        bar.animate();
         // then add to component view
         _that.add(bar);
         // and add to progressbar collection

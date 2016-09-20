@@ -11,7 +11,7 @@ const Router            = require("../app/core/router.js");
 const NewTodoTitleBar   = require("./component/new-todo-title-bar.js");
 const TodoStore         = require("../app/domain/todo-store.js");
 const SetAlarmRule      = require("./component/set-alarm-rule.js");
-const TodoService         = require("../app/domain/todo-service.js");
+const TodoService       = require("../app/domain/todo-service.js");
 
 // Composes icon button builder
 const createIconButton = function(params) {

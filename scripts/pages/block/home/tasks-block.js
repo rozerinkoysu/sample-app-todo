@@ -1,12 +1,16 @@
+/**
+ * 
+ */
+
 const Component  = require("../../../app/core/component.js");
 const TodoStore  = require("../../../app/domain/todo-store.js");
 const TasksList  = require("../../component/tasks-list.js");
 const TodayBar   = require("../../component/today-bar.js");
 const SMFConsole = require("../../../app/core/log.js");
-const Router     = require("../../../app/core/router.js")
+const Router     = require("../../../app/core/router.js");
 
 // Tasks list block
-const TasksBlock = function(){
+const TasksBlock = function() {
   
   // Calls super constructor
   Component.apply(this, [{
@@ -20,7 +24,7 @@ const TasksBlock = function(){
   // sets initial state of component
   var state = {
     show: "idle"
-  }
+  };
   
   // creates tab button underline rectangle
   const underline = new SMF.UI.Rectangle({
@@ -43,23 +47,29 @@ const TasksBlock = function(){
   // updates component when state is changed
   const update = function(){
     tasksList.setTasks(getTasks(), state.show);
-  }
+  };
   
   // changes component state
   const changeState = function(stateUpdate){
     return function(){
       state = Object.assign(state, stateUpdate);
       update();
-    }
-  }
+    };
+  };
   
   const getTasks = function(){
-    return TodoStore.findByStatus(state.show)(TodoStore.find(TodoStore.findByDate()));
+    return TodoStore
+      .findByStatus(state.show)(
+        TodoStore.find(
+        TodoStore.findByDate()));
   };
-
+  
+  /**
+   * Create todo tab button
+   */
   const todoButton = new SMF.UI.Label({
       height: "10%"
-    , top: "23%"
+    , top: "25%"
     , left: "10%"
   });
   
@@ -68,18 +78,14 @@ const TasksBlock = function(){
   todoButton.font.bold   = true;
   todoButton.font.family = "Roboto";
   todoButton.fontColor   = "#ffffff";
+  todoButton.autoSize    = true;
   // todoButton.width       = "30%";
-  // compose todoButton onTouchHandler
-  todoButton.onTouch     = tabChangeHandler(
-      "5%"
-    , "30%"
-    , changeState({show: "idle"})
-    , todoButton
-  );
-
+  /**
+   * Create tab button for completed tasks
+   */
   const completedButton       = new SMF.UI.Label({
       height: "10%"
-    , top: "23%"
+    , top: "25%"
     , left: "40%"
   });
   completedButton.text        = "COMPLETED";
@@ -87,18 +93,13 @@ const TasksBlock = function(){
   completedButton.font.bold   = true;
   completedButton.font.family = "Roboto";
   completedButton.fontColor   = "#ffffff";
+  completedButton.autoSize    = true;
   // todoButton.width       = "30%";
   // completedButton.height      = "10%";
   // completedButton.top         = "23%";
   // completedButton.left        = "40%";
   completedButton.alpha       = 0.6;
   // compose completedButton onTouchHandler
-  completedButton.onTouch = tabChangeHandler(
-      "37.5%"
-    , "40%"
-    , changeState({show: "completed"})
-  );
-  
   // create today-bar component
   const todayBar = new TodayBar({
       width: "100%"
@@ -135,9 +136,30 @@ const TasksBlock = function(){
   this.add(todoButton);
   this.add(completedButton);
   this.add(underline);
+
+  const todoButtonTouchHandler = tabChangeHandler(
+      todoButton.left - todoButton.width / 12
+    , todoButton.width + todoButton.width / 9
+    , changeState({show: "idle"})
+    // , todoButton
+  );
+  
+  todoButton.onTouch = todoButtonTouchHandler;
+  
+  // todoButton.onTouch();
+
+  // compose todoButton onTouchHandler
+  completedButton.onTouch = tabChangeHandler(
+      completedButton.left - completedButton.width / 12
+    , completedButton.width + completedButton.width / 9
+    , changeState({show: "completed"})
+  );
+  
+  todoButtonTouchHandler.call(todoButton);
   // this.add(newTaskButton);
 };
 
+// Composes tabChange function
 const tabChanger = function(underline) {
   var current;
   
@@ -145,7 +167,10 @@ const tabChanger = function(underline) {
     if(btn){
       current = btn;
     }
-
+    /**
+     * Start tab button animation and trigger block component state changing
+     *
+     */
     return function(e) {
       changeState();
       if(this !== current) {

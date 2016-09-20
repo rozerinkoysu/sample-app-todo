@@ -3,7 +3,7 @@
 */
 
 const Component = require('../../app/core/component.js');
-const TodoAssetsService = require("../../app/domain/todo-assets-service.js")
+const TodoAssetsService = require("../../app/domain/todo-assets-service.js");
 
 const TaskProgressBarComp = function(type, tasks) {
   
@@ -34,6 +34,7 @@ const TaskProgressBarComp = function(type, tasks) {
     , width: "40%"
     , height: "80%"
     , fillColor: "#7ED321"
+    , roundedEdge: 0
   });
 
   var bgRectangle = new SMF.UI.Rectangle({
@@ -43,6 +44,7 @@ const TaskProgressBarComp = function(type, tasks) {
     , height: "100%"
     , fillColor: "#000000"
     , alpha: 0.1
+    , roundedEdge: 0
   });
     
   var barContainer = new SMF.UI.Container({
@@ -52,6 +54,7 @@ const TaskProgressBarComp = function(type, tasks) {
     , left: "25%"
     , borderWidth: "1.5%"
     , borderColor: "#305E75"
+    , roundedEdge: 0
   });
   
   barContainer.add(bgRectangle);
@@ -67,9 +70,9 @@ const TaskProgressBarComp = function(type, tasks) {
   
   // rectangle.width = 1;
   
-  this.setProps = function(max, current) {
+  this.setProps = function(current, max) {
     // updates progressbar width calculation logic
-    curentWidth = ((current * 77) / max )+"%";
+    curentWidth = ((current * 98) / max )+"%";
   };
 
   this._view.onShow = function() {
