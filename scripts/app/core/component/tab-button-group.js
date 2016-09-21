@@ -24,7 +24,8 @@ const tabButtonTouchHandlerComposer = function(change$){
       this.touchEnabled = false;
       _current = this;
       
-      changeContent();
+      changeContent(name);
+      console.log("tab : "+ name)
     };
   };
 };
@@ -57,13 +58,15 @@ const changeContentComposer = function(addContent){
       throw new Error("Content must not null or undefined");
     }
       
-    return function(){
+    return function(name){
       if(rm) {
         rm();
       }
 
       rm = addContent(content._view);
       content.show();
+      
+      console.log("tab content: "+ name);
     };
   };
 };

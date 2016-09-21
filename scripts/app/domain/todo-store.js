@@ -197,7 +197,7 @@ TodoStore.save = function(update) {
 };
 
 TodoStore.completeTask = function(id){
-  updateTask({id: id, status: "completed"});
+  updateTask({id: id, status: "completed", completionDate: moment().toString()});
 };
 
 // const sortBy = function(propName){

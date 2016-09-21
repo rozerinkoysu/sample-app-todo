@@ -190,8 +190,8 @@ const PageLayout = function(params) {
   // TodoStore.findByLastMonth("completionDate")(TodoStore.find(TodoStore.findByLastMonth("creationDate"))).map(SMFConsole.dir);
   // SMFConsole.log(TodoStore.findByLastMonth("completionDate")(TodoStore.find(TodoStore.findByLastMonth("creationDate"))));
 
-  tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByLastWeek("completionDate")), "", true);
-  tabButtons.add(lastMonthButton, new TaskStatisticsContent(TodoStore.findByLastMonth("completionDate")));
+  tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByLastWeek("completionDate")), "lastWeekButton", true);
+  tabButtons.add(lastMonthButton, new TaskStatisticsContent(TodoStore.findByLastMonth("completionDate")), "lastMonthButton");
 
   const deleteTabButtonTouch = tabButtons
     .changeHandler()

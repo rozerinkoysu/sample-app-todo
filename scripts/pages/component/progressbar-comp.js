@@ -72,7 +72,7 @@ const TaskProgressBarComp = function(type, tasks) {
   };
 
   this._view.onShow = function() {
-    this.animate();
+    // this.animate();
   };
   
   this.animate = function() {

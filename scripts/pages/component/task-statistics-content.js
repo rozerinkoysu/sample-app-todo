@@ -31,8 +31,8 @@ const TaskStatisticsContent = function(finder) {
       );
 
     _that._items = [];
-    // clear progressbars of component
     _that.clear();
+    // clear progressbars of component container
     // loop grouped data
     Object.keys(grouped)
       .forEach(function(key) {
@@ -52,6 +52,8 @@ const TaskStatisticsContent = function(finder) {
         // and add to progressbars collection
         _that._items.push(bar);
       });
+      
+      console.log("bar len : "+_that._items.length);
   };
   
   try{
@@ -60,8 +62,11 @@ const TaskStatisticsContent = function(finder) {
     // Subscribes to store data change stream
     TodoStore
       .changeHandler$()
+      .do(function(){
+      })
       .subscribe(function() {
         // and invalidates component when store is changed.
+        
         update();
       });
   } catch(e) {
