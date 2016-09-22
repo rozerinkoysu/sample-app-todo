@@ -27,11 +27,11 @@ MVC pattern applied. Stores responsible for all data logic and data side effects
 There is a unidirectional data flow between views and stores. Stores and views are independent nodes with distinct inputs and outputs.
 
 ### View Layer ###
-- Page
+- **Page**
   - Pages are view-controllers drives native page controls and mediates between user interactions to application services
-- Block
+- **Block**
   - Blocks are ui components but blocks differently mediate between components and pages for ui needs. Blocks get user interactions and updates application services. stores and components. Components encapsulate common ui behaviors, blocks encapsulate ui behaviors in page that reduces and shares page-controller complexity. For example: DataList is a component but todo data list is block as well as includes different component like tab button pane etc.
-- Components
+- **Components**
    - Components are ui containers that encapsulate common behaviors  of ui elements. Usually components should be updated by blocks or pages. Components transfer user interactions to block or pages.
 
 ### Model ###
