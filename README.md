@@ -34,7 +34,7 @@ There is a unidirectional data flow between views and stores. Stores and views a
 - Components
      - Components are ui containers that encapsulate common behaviors  of ui elements. Usually components should be updated by blocks or pages. Components transfer user interactions to block or pages.
 
-#### Model
+### Model ###
     - Stores contain the application state and logic. Their role is somewhat similar to a model in a traditional MVC, but they manage the state of many objects. they do not represent a single record of data like ORM models do. Stores manage the application state for a particular domain within the application.
 
 ### Installation
