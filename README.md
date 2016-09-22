@@ -24,7 +24,7 @@
 MVC pattern applied. Stores responsible for all data logic and data side effects and components update from stores via Rxjs.
 
 ### Data Flow
-> There is a unidirectional data flow between views and stores. Stores and views are independent nodes with distinct inputs and outputs.
+There is a unidirectional data flow between views and stores. Stores and views are independent nodes with distinct inputs and outputs.
 
 ### View Layer ###
 - Page
