@@ -33,8 +33,8 @@ There is a unidirectional data flow between views and stores. Stores and views a
     - Blocks are ui components but blocks differently mediate between components and pages for ui needs. Blocks get user interactions and updates application services. stores and components. Components encapsulate common ui behaviors, blocks encapsulate ui behaviors in page that reduces and shares page-controller complexity. For example: DataList is a component but todo data list is block as well as includes different component like tab button pane etc.
 - Components
      - Components are ui containers that encapsulate common behaviors  of ui elements. Usually components should be updated by blocks or pages. Components transfer user interactions to block or pages.
-#### Application Layer
-- Stores
+
+#### Model
     - Stores contain the application state and logic. Their role is somewhat similar to a model in a traditional MVC, but they manage the state of many objects. they do not represent a single record of data like ORM models do. Stores manage the application state for a particular domain within the application.
 
 ### Installation
