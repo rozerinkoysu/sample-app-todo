@@ -20,5 +20,18 @@
 - Libs
   - Includes 3rd party script bundles
 
-### Application Architecture
-Inspired from Facebook Flux's one way flow implemantation. Stores responsible for all data logic and data side effects and components update from stores via Rxjs.
+## Application Architecture
+MVC pattern applied. Stores responsible for all data logic and data side effects and components update from stores via Rxjs.
+
+### Data Flow
+> There is a unidirectional data flow between views and stores. the above diagram should be the primary mental model for the Flux programmer. The dispatcher, stores and views are independent nodes with distinct inputs and outputs. The actions are simple objects containing the new data and an identifying type property.
+### View Layer ###
+- Page
+    - Pages are view-controllers drives native page controls and mediates between user interactions to application services
+- Block
+    - Blocks are ui components but blocks differently mediate between components and pages for ui needs. Blocks get user interactions and updates application services. stores and components. Components encapsulate common ui behaviors, blocks encapsulate ui behaviors in page that reduces and shares page-controller complexity. For example: DataList is a component but todo data list is block as well as includes different component like tab button pane etc.
+- Components
+     - Components are ui containers that encapsulate common behaviors  of ui elements. Usually components should be updated by blocks or pages. Components transfer user interactions to block or pages.
+#### Application Layer
+- Stores
+    - Stores contain the application state and logic. Their role is somewhat similar to a model in a traditional MVC, but they manage the state of many objects. they do not represent a single record of data like ORM models do. Stores manage the application state for a particular domain within the application.

@@ -3,9 +3,12 @@ const Component           = require("../../app/core/component.js");
 const SMFConsole          = require("../../app/core/log.js");
 const TodoStore           = require("../../app/domain/todo-store.js");
 
-/*
-  Tasks completion report by last week or last month
-*/
+/**
+ * Todos' report page
+ * 
+ * @class
+ * @augments Component
+ */
 const TaskStatisticsContent = function(finder) {
   Component.apply(this, [{
       width: "98%"

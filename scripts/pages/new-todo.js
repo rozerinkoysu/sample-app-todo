@@ -133,6 +133,12 @@ const menuComposer = function(params) {
   };
 };
 
+/**
+ * New todo creation page
+ *
+ * @class
+ * @augments PageBase
+ */
 const NewTodoPage = function(params){
   PageBase.apply(this, [{
   }]);

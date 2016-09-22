@@ -1,6 +1,6 @@
-const TodayBar  = require("./today-bar.js");
-const Component = require("../../app/core/component.js");
-const moment    = require("../../libs/moment.js");
+const TodayBar  = require("./today-bar.js"),
+      Component = require("../../app/core/component.js"),
+      moment    = require("../../libs/moment.js");
 
 const TodoDetailInfoBar = function(params){
   Component.apply(this, [params]);
@@ -45,7 +45,7 @@ const TodoDetailInfoBar = function(params){
     , left: "35%"
     , borderWidth: 0
     , layoutType: SMF.UI.LayoutType.ABSOLUTE
-  })
+  });
 
   this.add(bg);
   dayContainer.add(dayLbl);
@@ -57,7 +57,7 @@ const TodoDetailInfoBar = function(params){
     , top: 0
     , left: "35%"
     , borderColor: "#979797"
-  })
+  });
 
   const hSep = new SMF.UI.Rectangle({
       width: "100%"
@@ -65,7 +65,7 @@ const TodoDetailInfoBar = function(params){
     , top: "99%"
     , left: 0
     , borderColor: "#979797"
-  })
+  });
   
   this.add(vSep);
   this.add(hSep);

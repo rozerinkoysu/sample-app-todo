@@ -7,6 +7,9 @@ const SMFConsole = require("../app/core/log.js");
 /**
  * User dashboard page, it includes open and completed tasks lists that created by user and
  * can be deleted or completed by user. 
+ * 
+ * @class
+ * @augments PageLayout
 */
 var HomePage = function() {
   // calls super class contructor
