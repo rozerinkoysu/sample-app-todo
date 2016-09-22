@@ -24,7 +24,8 @@
 MVC pattern applied. Stores responsible for all data logic and data side effects and components update from stores via Rxjs.
 
 ### Data Flow
-> There is a unidirectional data flow between views and stores. the above diagram should be the primary mental model for the Flux programmer. The dispatcher, stores and views are independent nodes with distinct inputs and outputs. The actions are simple objects containing the new data and an identifying type property.
+> There is a unidirectional data flow between views and stores. Stores and views are independent nodes with distinct inputs and outputs.
+
 ### View Layer ###
 - Page
     - Pages are view-controllers drives native page controls and mediates between user interactions to application services
@@ -35,3 +36,6 @@ MVC pattern applied. Stores responsible for all data logic and data side effects
 #### Application Layer
 - Stores
     - Stores contain the application state and logic. Their role is somewhat similar to a model in a traditional MVC, but they manage the state of many objects. they do not represent a single record of data like ORM models do. Stores manage the application state for a particular domain within the application.
+
+### Installation
+[Start with smartface](https://smartface.atlassian.net/wiki/pages/viewpage.action?pageId=8486965)
