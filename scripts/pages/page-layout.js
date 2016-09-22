@@ -14,7 +14,7 @@ const SliderDrawerComp      = require("./component/app-slider-drawer.js");
 const TabButtonGroup        = require("../app/core/component/tab-button-group.js");
 const TaskStatisticsContent = require("./component/task-statistics-content.js");
 const TodoStore             = require("../app/domain/todo-store.js");
-const AbstractComponent     = require("../app/core/abstract-component.js");
+const AbstractContainer     = require("../app/core/abstract-component.js");
 
 // Calls super class's add method
 const superAdd = function(child) {
@@ -242,7 +242,7 @@ PageLayout.prototype = Object.create(PageBase.prototype);
 
 // Overrides super class's add method,
 PageLayout.prototype.add = function(content) {
-  if (content instanceof AbstractComponent) {
+  if (content instanceof AbstractContainer) {
     this._contentContainer.add(content._view);
   } else {
     this._contentContainer.add(content);

@@ -1,15 +1,22 @@
-const AbstractComponent = require("./abstract-component.js");
-const SMFConsole = require("./log.js");
+const AbstractContainer = require("./abstract-component.js");
 
+/**
+ * Abstract Component Class
+ * 
+ * @class
+ * @abstract
+ * @version 1.0.0
+ */
 const Component = function(params) {
-  AbstractComponent.apply(this);
+  AbstractContainer.apply(this);
   this._view = new SMF.UI.Container(params);
 };
 
-Component.prototype = Object.create(AbstractComponent.prototype);
+Component.prototype = Object.create(AbstractContainer.prototype);
 
-// Component.prototype.add = ComponentMixin.addChild;
-
+/**
+ * Removes children of the page control
+ */
 Component.prototype.clear = function() {
   this._view.clear();
 };

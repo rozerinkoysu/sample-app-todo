@@ -91,24 +91,37 @@ var data = [
 data.reverse();
 
 /**
- * Todos data store
+ * Todo data store
+ * 
+ * @namespace
  */
 const TodoStore = function() {
 };
 
 /**
- * Finds todos by id
- *
+ * Filters data by id
+ * 
+ * @return {Array}
  */
 TodoStore.findById = function(id) {
   return data.filter(function(todo){ return todo.id == id })[0] || null;
 };
 
-// Returns copy of last week tasks that they are not deleted by user.
+/**
+ * Returns data by filter
+ * 
+ * @return {Array}
+ */
 TodoStore.find = function(finder) {
   return finder(data).filter(filterByProp("isDeleted", false, "eq"));
 };
 
+/**
+ * Filters data by last week
+ * @return {Array}
+ * 
+ * @returns {Array}
+ */
 TodoStore.findByLastWeek = function(fieldName) {
   return function(data){
     return data
@@ -120,6 +133,11 @@ TodoStore.findByLastWeek = function(fieldName) {
   };
 };
 
+/**
+ * Filters data by last month
+ *
+ * @return {Array}
+ */
 TodoStore.findByLastMonth = function(fieldName) {
   return function(data){
     return data
@@ -131,6 +149,11 @@ TodoStore.findByLastMonth = function(fieldName) {
   };
 };
 
+/**
+ * Filters data by type
+ *
+ * @returns {Array}
+ */
 TodoStore.findByType = function(type) {
   return function(data){
     return copyof(
@@ -140,6 +163,11 @@ TodoStore.findByType = function(type) {
   };
 };
 
+/**
+ * Filters data by status
+ *
+ * @returns {Array}
+ */
 TodoStore.findByStatus = function(status) {
   return function(data){
     return copyof(
@@ -149,6 +177,11 @@ TodoStore.findByStatus = function(status) {
   };
 };
 
+/**
+ * Groups data by property name
+ *
+ * @returns {Array}
+ */
 TodoStore.groupByPropName = function(propName){
   return function(data){
     return data
@@ -164,6 +197,11 @@ TodoStore.groupByPropName = function(propName){
   };
 };
 
+/**
+ * Adds new data and returns id
+ *
+ * @returns {number}
+ */
 TodoStore.add = function(newData) {
   const initialData = {
       alarmRule: ""
@@ -184,18 +222,35 @@ TodoStore.add = function(newData) {
   return newData.id;
 };
 
+/**
+ * Returns change handler stream
+ *
+ * @returns {Rx.Observable}
+ */
 TodoStore.changeHandler$ = function(){
   return _changeHandler$.share();
 };
 
+/**
+ * Deletes data from store by id
+ *
+ */
 TodoStore.deleteTask = function(id){
   updateTask({id: id, isDeleted: true});
 };
 
+/**
+ * saves an existing data
+ *
+ */
 TodoStore.save = function(update) {
   updateTask(update);
 };
 
+/**
+ * Updates data status to 'completed'
+ *
+ */
 TodoStore.completeTask = function(id){
   updateTask({id: id, status: "completed", completionDate: moment().toString()});
 };

@@ -2,7 +2,10 @@ const Component  = require("../component.js");
 const Rx         = require("../../../libs/rx.all.js");
 // const SMFConsole = require("../log.js");
 
-// Compose 
+/**
+ * Composer Method
+ * @ignore
+ */
 const tabButtonTouchHandlerComposer = function(change$){
   // current state
   var _current;
@@ -30,7 +33,10 @@ const tabButtonTouchHandlerComposer = function(change$){
   };
 };
 
-// creates add content method
+/**
+ * Composes add content method
+ * @ignore
+ */
 const addContentComposer = function(parentAdd, params){
   // create tab content container
   const container = new SMF.UI.Container(params);
@@ -48,7 +54,10 @@ const addContentComposer = function(parentAdd, params){
   };
 };
 
-// compose change content handler
+/**
+ * compose change content handler
+ * @ignore
+ */
 const changeContentComposer = function(addContent){
   var rm;
   
@@ -71,7 +80,11 @@ const changeContentComposer = function(addContent){
   };
 };
 
-// composes to add tab button
+/**
+ * composes tab button adding method
+ * 
+ * @ignore
+ */
 const tabButtonAddComposer = function(parentAdd, params){
   const container = new SMF.UI.Container(params); 
   parentAdd(container);
@@ -81,7 +94,13 @@ const tabButtonAddComposer = function(parentAdd, params){
   }
 };
 
-// TabButtonGroup Class
+/**
+ * TabButtonGroup Class
+ * Manages tab-buttons and their contents.
+ * 
+ * @class
+ * @augments Component
+ */
 const TabButtonGroup = function(params, tabButtonsContainerProps, contentContainerProps){
   params.layoutType = SMF.UI.LayoutType.FLOW;
   //calls super constructor
@@ -118,7 +137,11 @@ TabButtonGroup.prototype.changeTab = function(index){
 // Extends from Component Class
 TabButtonGroup.prototype = Object.create(Component.prototype);
 
-// Overrides add method
+/**
+ * Overrides add method so that can add buttons and content to component container
+ * 
+ * @override
+ */
 TabButtonGroup.prototype.add = function(button, content, name, isSelected){
   const onTouch = this
     ._buttonTouchHandler(
@@ -134,7 +157,11 @@ TabButtonGroup.prototype.add = function(button, content, name, isSelected){
     onTouch.call(button);
 };
 
-// returns change handler stream
+/**
+ * Returns change handler stream
+ *
+ * @returns {Rx.Observable}
+ */
 TabButtonGroup.prototype.changeHandler = function(){
   // triggers stream When user presses button is not selected
   return this

@@ -56,17 +56,14 @@ const TaskStatisticsContent = function(finder) {
       console.log("bar len : "+_that._items.length);
   };
   
-  try{
+  try {
     // initialize component
     update();
     // Subscribes to store data change stream
     TodoStore
       .changeHandler$()
-      .do(function(){
-      })
       .subscribe(function() {
         // and invalidates component when store is changed.
-        
         update();
       });
   } catch(e) {

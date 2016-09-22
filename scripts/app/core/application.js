@@ -8,6 +8,10 @@ function getRequirements(klass){
   });
 }
 
+/**
+ * @class
+ * @ignore
+ */
 const Application = function(){
   
 }

@@ -1,0 +1,29 @@
+{
+  "name": "smartface-todo-app",
+  "version": "1.0.0",
+  "description": "Smartface.io official todo application example",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartface/sample-app-todo.git"
+  },
+  "keywords": [
+    "smartface",
+    "javascript",
+    "mobile"
+  ],
+  "author": "Cenk Cetinkaya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartface/sample-app-todo/issues"
+  },
+  "homepage": "https://github.com/smartface/sample-app-todo#readme",
+  "devDependencies": {
+    "babel-jest": "^15.0.0",
+    "babel-polyfill": "^6.13.0",
+    "jest": "^15.1.1"
+  }
+}

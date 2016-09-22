@@ -1,38 +1,61 @@
 const SMFConsole = require("./log.js");
 
-const AbstractComponent = function(){
+/**
+ * @class
+ * @version 1.0.0
+ * 
+ * Abstract Container Class
+ */
+const AbstractContainer = function(){
 };
 
-AbstractComponent.prototype.add = function(child) {
-  // SMFConsole.dir(child);
+/**
+ * Adds child element to view
+ */
+AbstractContainer.prototype.add = function(child) {
   try {
-    if (child instanceof AbstractComponent) {
+    if (child instanceof AbstractContainer) {
       this._view.add(child._view);
     } else {
       this._view.add(child);
     }
   } catch(e) {
-    SMFConsole.error('[AbstractComponent.add]', this, child, e);
+    SMFConsole.error('[AbstractContainer.add]', this, child, e);
   }
 };
 
-AbstractComponent.prototype.getWidth = function () {
-  console.log("width"+ this._view);
+/**
+ * Returns view control width
+ *
+ * @returns {(number|string)}
+ */
+AbstractContainer.prototype.getWidth = function () {
   return this._view.width;
 }
 
-AbstractComponent.prototype.setWidth = function (value) {
+/**
+ * Sets view control width
+ */
+AbstractContainer.prototype.setWidth = function (value) {
   this._view.width.width = value;
 }
 
-AbstractComponent.prototype.getHeight = function () {
+/**
+ * Returns view control width
+ *
+ * @returns {(number|string)}
+ */
+AbstractContainer.prototype.getHeight = function () {
   return this._view.height;
 }
 
-AbstractComponent.prototype.setHeight = function (value) {
+/**
+ * Sets view control height
+ */
+AbstractContainer.prototype.setHeight = function (value) {
   this._view.width.height = value;
 }
 
 
 
-module.exports = AbstractComponent;
+module.exports = AbstractContainer;

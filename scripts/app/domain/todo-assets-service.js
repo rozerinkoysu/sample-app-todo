@@ -11,9 +11,19 @@ const icons = {
   , others: ["others_white.png", "others_dark.png", "others.png"]
 };
 
+/**
+ * Manages related ui assets of Todo
+ * 
+ * @namespace
+ */
 const TaskAssetsService = {
 };
 
+/**
+ * Assets names
+ * 
+ * @enum
+ */
 TaskAssetsService.names = {
     shopping: "shopping"
   , payment: "payment"
@@ -24,6 +34,13 @@ TaskAssetsService.names = {
   , hobby: "hobby"
   , others: "others"
 };
+
+/**
+ * Assets thresholds
+ * 
+ * @enum
+ */
+TaskAssetsService.types = {black: 1, white: 0, normal: 2};
 
 function raiseErrorIfNameIsNotFound(name, type) {
   if(!TaskAssetsService.names[name] || !name){
@@ -37,14 +54,22 @@ function raiseErrorIfNameIsNotFound(name, type) {
   return false;
 }
 
-TaskAssetsService.types = {black: 1, white: 0, normal: 2};
-
+/**
+ * Returns all icons' names by type
+ *
+ * @return {Array<{name:{string}, image:{string}}>}
+ */
 TaskAssetsService.getAllIconsByType = function(type){
   return Object.keys(icons).map(function(key){
     return {name: key, image:TaskAssetsService.getIcon(key, type)};
   })
 }
 
+/**
+ * Returns icon name by threshold and name
+ *
+ * @return {Array<{name:{string}, image:{string}}>}
+ */
 TaskAssetsService.getIcon = function(name, type) {
   if(!raiseErrorIfNameIsNotFound(name, type)){
     return icons[name][type];
