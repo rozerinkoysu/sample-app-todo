@@ -1,5 +1,7 @@
 ## Smartface.io Platform Official Todo Application Example
 
+![Home Page](/docs/images/home.png) ![New Todo Page](/docs/images/new_todo.png)
+
 ### Application Skeleton
 - App.js
   - Application base
