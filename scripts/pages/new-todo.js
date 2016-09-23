@@ -229,19 +229,6 @@ const NewTodoPage = function(params){
   
   const newTaskData = {};
   
-  // const header = new ChildPageHeader("New ToDo");
-  // pageContainer.add(header._view);
-  // const space = new SMF.UI.Rectangle({
-  //     width: "100%"
-  //   , height: "11%"
-  //   // , top: "11%"
-  //   , left: 0
-  //   , borderWidth: 0
-  //   , fillColor: "#00A1F1"
-  // });
-  
-  // pageContainer.add(space);
-  
   // composes icon button builder
   // and sends menu container for adding buttons
   const menuItemAdd = menuComposer.apply(pageLayoutContainer, [{

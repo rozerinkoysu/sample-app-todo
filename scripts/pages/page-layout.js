@@ -29,16 +29,7 @@ const superAdd = function(child) {
  * @augments PageBase
  */
 const PageLayout = function(params) {
-  
-  // params.onControlAdded = function(e){
-  //   SMFConsole.dir("child added", e.control);
-  // };
-  // params.width         = "100%";
-  // params.layoutType    = SMF.UI.LayoutType.FLOW;
-  // params.verticalGap   = 0;
-  // params.horizontalGap = 0;
-  // params.layoutAlignment = SMF.UI.LayoutAlignment.CENTER;
-  
+
   // calls super class constructor
   PageBase.apply(this, [params]);
 
@@ -49,21 +40,6 @@ const PageLayout = function(params) {
     , enabled: true
   };
   
-    // var mainNavToggleOnSelected = ActionBarWrapper.addLeftBarButtonItem("Menu.png");
-  
-    // const sliderMenuIconClick$ = Rx
-    //   .Observable
-    //   .create(function(observer){
-    //     mainNavToggleOnSelected(function(e){
-    //       observer.onNext(e);
-    //     });
-        
-    //     return function(){
-    //       observer.onComplete();
-    //     }
-    //   })
-    //   .share();
-      
   if(Device.deviceOS == "iOS") {
     options.ios = {
         rightBarButtonItems: []
@@ -113,9 +89,6 @@ const PageLayout = function(params) {
   const _sliderDrawer = new SliderDrawerComp({
       width: '90%'
     , height: "100%"
-    // , touchEnabled: 'false'
-    // , layoutType: SMF.UI.LayoutType.FLOW
-    // , layoutAlignment: SMF.UI.LayoutAlignment.CENTER
     , horizontalGap: 0
     , verticalGap: 0
     , left: 0 
@@ -188,8 +161,6 @@ const PageLayout = function(params) {
 
   lastMonthButton.font.size    = "7pt";
   lastMonthButton.font.family  = "Roboto";
-  // TodoStore.findByLastMonth("completionDate")(TodoStore.find(TodoStore.findByLastMonth("creationDate"))).map(SMFConsole.dir);
-  // SMFConsole.log(TodoStore.findByLastMonth("completionDate")(TodoStore.find(TodoStore.findByLastMonth("creationDate"))));
 
   tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByLastWeek("completionDate")), "lastWeekButton", true);
   tabButtons.add(lastMonthButton, new TaskStatisticsContent(TodoStore.findByLastMonth("completionDate")), "lastMonthButton");
@@ -227,15 +198,6 @@ const PageLayout = function(params) {
   superAdd.apply(this, [_sliderDrawer]);
   
   tabButtons._view.left = "10%"
-  // _sliderDrawer._view.width/2 - tabButtons.getWidth()/2;
-
-/*  this._view.onClose = function(e){
-    // _sliderDrawer._view.clear();
-    deleteTabButtonTouch();
-    unloadStream();
-    this.clear();
-  }
-*/
 };
 
 // extends from PageBase Class

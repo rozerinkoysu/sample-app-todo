@@ -85,10 +85,6 @@ const SetAlarmRule = function(params, rule, isEdiable){
   
   
   this.setProps = function(rule, isEdiable) {
-    // alert(rule);
-    // if(rule){
-    //   rule = moment(rule, "LLLL");
-    // }
     changeState.apply(this, [rule, isEdiable]);
   };
   

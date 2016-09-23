@@ -64,8 +64,6 @@ const TaskProgressBarComp = function(type, tasks) {
   var curentWidth = 0;
   rectangle.width = curentWidth;
   
-  // rectangle.width = 1;
-  
   this.setProps = function(current, max) {
     // updates progressbar width
     curentWidth = ((current * 98) / max )+"%";

@@ -5,7 +5,7 @@ include('i18n/i18n.js');
 include("libs/require.js");
 
 Application.onUnhandledError = Application_OnError;
-Application.onStart 				 = Application_OnStart;
+Application.onStart 		 = Application_OnStart;
 
 /**
  * Triggered when application is started.
