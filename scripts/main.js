@@ -2,7 +2,8 @@ const HomePage       = require("./pages/home.js");
 const NewTodoPage    = require("./pages/new-todo.js");
 const TodoDetailPage = require("./pages/todo-detail.js");
 const Router         = require("./app/core/router.js");
-const SMFConsole     = require("./app/core/log.js");
+// const SMFConsole     = require("./app/core/log.js");
+
 
 
 // Defines routes of application pages

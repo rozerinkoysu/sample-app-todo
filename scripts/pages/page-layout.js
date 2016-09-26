@@ -78,13 +78,11 @@ const PageLayout = function(params) {
 
   this._view.onShow = function(){
     SMF.UI.statusBar.visible     = true;
-    SMF.UI.statusBar.color       = "#0079B6"
+    SMF.UI.statusBar.color       = "#0079B6";
     SMF.UI.statusBar.transparent = false;
     actionBar.reload();
-  }
+  };
   
-  // saves curent scope
-  const _that = this;
   // creates SliderDrawer Component
   const _sliderDrawer = new SliderDrawerComp({
       width: '90%'
@@ -197,7 +195,7 @@ const PageLayout = function(params) {
   superAdd.apply(this, [this._contentContainer]);
   superAdd.apply(this, [_sliderDrawer]);
   
-  tabButtons._view.left = "10%"
+  tabButtons._view.left = "10%";
 };
 
 // extends from PageBase Class

@@ -111,18 +111,19 @@
         }
 
 
-        /*function stat(filename) {
+        function stat(filename) {
             filename = path._makeLong(filename);
-            var cache = stat.cache;
+            var cache = stat.cache,
+                result;
             if (cache !== null) {
-                var result = cache.get(filename);
+                result = cache.get(filename);
                 if (result !== undefined) return result;
             }
-            var result = internalModuleStat(filename);
+            result = SMF.scriptStat(filename);
             if (cache !== null) cache.set(filename, result);
             return result;
         }
-        stat.cache = null;*/
+        stat.cache = null;
 
 
         function Module(id, parent) {
@@ -172,12 +173,11 @@
                 return packageMainCache[requestPath];
             }
             var jsonPath = path.resolve(requestPath, 'package.json');
-            // throw Error("Not implemented");
             var fileN = path._makeLong(jsonPath);
-            fileN = fileN.startsWith("./")? fileN.substr(2): fileN;
+            fileN = fileN.startsWith("./") ? fileN.substr(2) : fileN;
             var json = SMF.readCode(fileN); //TODO: check
 
-            if (json === undefined) {
+            if (!json) {
                 return false;
             }
 
@@ -196,7 +196,8 @@
             var pkg = null;
             try {
                 pkg = readPackage(requestPath);
-            }catch(ex) {}
+            }
+            catch (ex) {}
 
             if (!pkg) return false;
 
@@ -212,10 +213,12 @@
         // absolute realpath.
         function tryFile(requestPath, isMain) {
             //check file exist, if not exists return false
+            const rc = stat(requestPath);
             if (!isMain) {
-                return /*rc === 0 &&*/ path.resolve(requestPath);
+                return rc === 0 && path.resolve(requestPath);
             }
-            // return rc === 0 && fs.realpathSync(requestPath);
+            else
+                return false;
         }
 
         // given a path check a the file exists with any of the set extensions
@@ -259,31 +262,23 @@
                 var basePath = path.resolve(curPath, request);
                 var filename;
                 if (!trailingSlash) {
-                    //TODO: directory options is not included right now
-                    // var rc = stat(basePath);
-                    if (basePath.endsWith(".js")) { //This is a hack
-                        // if (rc === 0) { // File.
-                        // if (!isMain) {
+                    var rc = stat(basePath);
+                    if (rc === 0) { // File.
                         filename = path.resolve(basePath);
-                        // }
-                        // else {
-                        //     filename = fs.realpathSync(basePath);
-                        // }
                     }
-                    else {
-                        // else if (rc === 1) { // Directory.
+                    else if (rc === 1) { // Directory.
                         if (exts === undefined)
                             exts = Object.keys(Module._extensions);
                         filename = tryPackage(basePath, exts, isMain);
-                        
+
                     }
 
-                   /* if (!filename) {
+                    if (!filename) {
                         // try it with each of the extensions
                         if (exts === undefined)
                             exts = Object.keys(Module._extensions);
                         filename = tryExtensions(basePath, exts, isMain);
-                    }*/
+                    }
                 }
 
                 if (!filename) {
@@ -292,12 +287,12 @@
                     filename = tryPackage(basePath, exts, isMain);
                 }
 
-               /* if (!filename) {
-                    // try it with each of the extensions at "index"
-                    if (exts === undefined)
-                        exts = Object.keys(Module._extensions);
-                    filename = tryExtensions(path.resolve(basePath, 'index'), exts, isMain);
-                }*/
+                /* if (!filename) {
+                     // try it with each of the extensions at "index"
+                     if (exts === undefined)
+                         exts = Object.keys(Module._extensions);
+                     filename = tryExtensions(path.resolve(basePath, 'index'), exts, isMain);
+                 }*/
 
                 if (filename) {
                     // Warn once if '.' resolved outside the module dir
@@ -561,9 +556,10 @@
             assert(!this.loaded);
             this.filename = filename;
             this.paths = Module._nodeModulePaths(path.dirname(filename));
+
             var extension = path.extname(filename) || '.js';
             if (!Module._extensions[extension]) extension = '.js';
-                Module._extensions[extension](this, filename);
+            Module._extensions[extension](this, filename);
             this.loaded = true;
         };
 
@@ -587,89 +583,78 @@
         // the file.
         // Returns exception, if any.
         Module.prototype._compile = function(content, filename) {
-            try {
-                // Remove shebang
-                var contLen = content.length;
-                if (contLen >= 2) {
-                    if (content.charCodeAt(0) === 35 /*#*/ &&
-                        content.charCodeAt(1) === 33 /*!*/ ) {
-                        if (contLen === 2) {
-                            // Exact match
+            // Remove shebang
+            var contLen = content.length;
+            if (contLen >= 2) {
+                if (content.charCodeAt(0) === 35 /*#*/ &&
+                    content.charCodeAt(1) === 33 /*!*/ ) {
+                    if (contLen === 2) {
+                        // Exact match
+                        content = '';
+                    }
+                    else {
+                        // Find end of shebang line and slice it off
+                        var i = 2;
+                        for (; i < contLen; ++i) {
+                            var code = content.charCodeAt(i);
+                            if (code === 10 /*\n*/ || code === 13 /*\r*/ )
+                                break;
+                        }
+                        if (i === contLen)
                             content = '';
-                        }
                         else {
-                            // Find end of shebang line and slice it off
-                            var i = 2;
-                            for (; i < contLen; ++i) {
-                                var code = content.charCodeAt(i);
-                                if (code === 10 /*\n*/ || code === 13 /*\r*/ )
-                                    break;
-                            }
-                            if (i === contLen)
-                                content = '';
-                            else {
-                                // Note that this actually includes the newline character(s) in the
-                                // new output. This duplicates the behavior of the regular expression
-                                // that was previously used to replace the shebang line
-                                content = content.slice(i);
-                            }
+                            // Note that this actually includes the newline character(s) in the
+                            // new output. This duplicates the behavior of the regular expression
+                            // that was previously used to replace the shebang line
+                            content = content.slice(i);
                         }
                     }
                 }
-    
-                // create wrapper function
-                var wrapper = Module.wrap(content);
-    
-                var compiledWrapper = vm.runInThisContext(wrapper, {
-                    filename: filename,
-                    lineOffset: 0,
-                    displayErrors: true
-                });
-    
-                if (process._debugWaitConnect) {
-                    if (!resolvedArgv) {
-                        // we enter the repl if we're not given a filename argument.
-                        if (process.argv[1]) {
-                            resolvedArgv = Module._resolveFilename(process.argv[1], null);
-                        }
-                        else {
-                            resolvedArgv = 'repl';
-                        }
+            }
+
+            // create wrapper function
+            var wrapper = Module.wrap(content);
+
+            var compiledWrapper = vm.runInThisContext(wrapper, {
+                filename: filename,
+                lineOffset: 0,
+                displayErrors: true
+            });
+
+            if (process._debugWaitConnect) {
+                if (!resolvedArgv) {
+                    // we enter the repl if we're not given a filename argument.
+                    if (process.argv[1]) {
+                        resolvedArgv = Module._resolveFilename(process.argv[1], null);
                     }
-    
-                    // Set breakpoint on module start
-                    if (filename === resolvedArgv) {
-                        delete process._debugWaitConnect;
-                        var Debug = vm.runInDebugContext('Debug');
-                        Debug.setBreakPoint(compiledWrapper, 0, 0);
+                    else {
+                        resolvedArgv = 'repl';
                     }
                 }
-                var dirname = path.dirname(filename);
-                var require = internalModule.makeRequireFunction.call(this);
-                var args = [this.exports, require, this, filename, dirname];
-                var depth = internalModule.requireDepth;
-                if (depth === 0) stat.cache = new Map();
-                var result = compiledWrapper.apply(this.exports, args);
-                if (depth === 0) stat.cache = null;
-                return result;
+
+                // Set breakpoint on module start
+                if (filename === resolvedArgv) {
+                    delete process._debugWaitConnect;
+                    var Debug = vm.runInDebugContext('Debug');
+                    Debug.setBreakPoint(compiledWrapper, 0, 0);
+                }
             }
-            catch (err) {
-                err.message = filename + ': ' + err.message;
-                throw err;
-            }
+            var dirname = path.dirname(filename);
+            var require = internalModule.makeRequireFunction.call(this);
+            var args = [this.exports, require, this, filename, dirname];
+            var depth = internalModule.requireDepth;
+            if (depth === 0) stat.cache = new Map();
+            var result = compiledWrapper.apply(this.exports, args);
+            if (depth === 0) stat.cache = null;
+            return result;
         };
 
 
         // Native extension for .js
         Module._extensions['.js'] = function(module, filename) {
             // var content = fs.readFileSync(filename, 'utf8');
-            var fileN = filename.startsWith("./")? filename.substr(2): filename;
+            var fileN = filename.startsWith("./") ? filename.substr(2) : filename;
             var content = SMF.readCode(fileN);
-            if (Device.deviceOS === "Android") { //bug COR-928
-                var c1 = content;
-                var li = content.lastIndexOf(";")
-                content = content.substring(0, li);
-            }
             module._compile(internalModule.stripBOM(content), filename);
         };
 
@@ -678,7 +663,7 @@
         Module._extensions['.json'] = function(module, filename) {
             // var content = fs.readFileSync(filename, 'utf8');
             throw Error("Not implemented");
-            var fileN = filename.startsWith("./")? filename.substr(2): filename;
+            var fileN = filename.startsWith("./") ? filename.substr(2) : filename;
             var content = SMF.readCode(fileN);
             try {
                 module.exports = JSON.parse(internalModule.stripBOM(content));
@@ -761,7 +746,7 @@
 
         // backwards compatibility
         return Module.Module = Module;
-    };
+    }
 
     libs.internalModule = function internalModule() {
         if (!internalModule.exports) {
@@ -801,16 +786,10 @@
          * translates it to FEFF, the UTF-16 BOM.
          */
         function stripBOM(content) {
-            try{
-                if (content.charCodeAt(0) === 0xFEFF) {
-                    content = content.slice(1);
-                }
-            } catch(e){
-                throw new Error('Error on file : ' +
-                    util.inspect(path));
-            } finally {
-                return content;
+            if (content.charCodeAt(0) === 0xFEFF) {
+                content = content.slice(1);
             }
+            return content;
         }
 
         return {
@@ -2068,9 +2047,9 @@
 
 
     function ContextifyScript(code, options) {
-        if(SMF.Contextif)
+        if (SMF.Contextify)
             return new SMF.Contextify(code, options);
-        
+
         this.runInContext = function runInContext(contextifiedSandbox, options) {
             throw Error("Not implemented");
         };
@@ -2083,7 +2062,7 @@
         this.runInThisContext = function runInThisContext(options) {
             try {
                 var fn = eval(code);
-                
+
             }
             catch (ex) {
                 throw ex;
@@ -2091,11 +2070,12 @@
             //TODO: assign parameter values
             return fn;
         };
-        
+
 
     }
 
     var initiatedRequire = false;
+
     function initRequire(startFile) {
         if (initiatedRequire) {
             throw Error("Should not initRequire more than once");
@@ -2107,4 +2087,5 @@
     }
 
     global.initRequire = initRequire;
+
 })();
