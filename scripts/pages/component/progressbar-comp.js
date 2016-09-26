@@ -28,7 +28,7 @@ const TaskProgressBarComp = function(type, tasks) {
   
   this.add(icon);
   
-  const rectangle = new SMF.UI.Rectangle({
+  const progressbarRect = new SMF.UI.Rectangle({
       top: "12%"
     , left: "1%"  
     , width: "40%"
@@ -37,7 +37,7 @@ const TaskProgressBarComp = function(type, tasks) {
     , roundedEdge: 0
   });
 
-  var bgRectangle = new SMF.UI.Rectangle({
+  var progressbarBackground = new SMF.UI.Rectangle({
       top: 0
     , left: "0"
     , width: "100%"
@@ -57,12 +57,12 @@ const TaskProgressBarComp = function(type, tasks) {
     , roundedEdge: 0
   });
   
-  barContainer.add(bgRectangle);
-  barContainer.add(rectangle);
+  barContainer.add(progressbarBackground);
+  barContainer.add(progressbarRect);
   this.add(barContainer);
   
   var curentWidth = 0;
-  rectangle.width = curentWidth;
+  progressbarRect.width = curentWidth;
   
   this.setProps = function(current, max) {
     // updates progressbar width
@@ -74,8 +74,8 @@ const TaskProgressBarComp = function(type, tasks) {
   };
   
   this.animate = function() {
-    rectangle.width = 1;
-    rectangle.animate({
+    progressbarRect.width = 1;
+    progressbarRect.animate({
       property: 'width',
       endValue: curentWidth,
       motionEase: SMF.UI.MotionEase.DECELERATING,
