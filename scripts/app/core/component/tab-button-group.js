@@ -77,10 +77,11 @@ const changeContentComposer = function(addContent){
       if(timeout !== false)
         clearTimeout(timeout);
       
+      // Android children update hack
       timeout = setTimeout(function(){
         rm = addContent(content._view);
-      }, 10000)
-      content.show();
+        content.show();
+      }, 50);
       
       console.log("tab content: "+ name);
     };
