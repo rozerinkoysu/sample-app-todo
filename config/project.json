@@ -127,11 +127,11 @@
 		"output": {
 			"ios": {
 				"outputFolder": "output/iOS",
-				"bundleIdentifier": "io.smartface.demo"
+				"bundleIdentifier": "io.smartface.sample.todo"
 			},
 			"android": {
 				"outputFolder": "output/Android",
-				"packageName": "io.smartface.demo"
+				"packageName": "io.smartface.sample.todo"
 			}
 		},
 		"tempFolder": "output/.tmp"

@@ -3,11 +3,11 @@
         <CompanyName>Smartface User</CompanyName>
         <LicenseName>Smartface Empty Workspace</LicenseName>
         <SASVersion>v5.0.0</SASVersion>
-        <CreateDate>01.08.2016 11:43:24</CreateDate>
-        <ExpireDate>06.08.2026 11:43:24</ExpireDate>
+        <CreateDate>05.09.2016 15:04:50</CreateDate>
+        <ExpireDate>03.09.2026 15:04:50</ExpireDate>
         <LicenseType>Professional</LicenseType>
         <PackageType>iOS</PackageType>
-        <PackageName>io.smartface.demo</PackageName>
+        <PackageName>io.smartface.sample.todo</PackageName>
         <PackageFeatures>
             <PackageFeature>
                 <FeatureName>Feature</FeatureName>
@@ -21,11 +21,11 @@
         <CompanyName>Smartface User</CompanyName>
         <LicenseName>Smartface Empty Workspace</LicenseName>
         <SASVersion>v5.0.0</SASVersion>
-        <CreateDate>01.08.2016 11:43:24</CreateDate>
-        <ExpireDate>06.08.2026 11:43:24</ExpireDate>
+        <CreateDate>05.09.2016 15:04:50</CreateDate>
+        <ExpireDate>03.09.2026 15:04:50</ExpireDate>
         <LicenseType>Professional</LicenseType>
         <PackageType>Android</PackageType>
-        <PackageName>io.smartface.demo</PackageName>
+        <PackageName>io.smartface.sample.todo</PackageName>
         <PackageFeatures>
             <PackageFeature>
                 <FeatureName>Feature</FeatureName>

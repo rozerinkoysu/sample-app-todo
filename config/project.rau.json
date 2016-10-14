@@ -3,16 +3,16 @@
         "rau": {
             "formatVersion": "1.0.0",
             "hashType": "md5",
-            "profileKey": "myAppKey-Secret",
+            "profileKey": "2qh1RVOzCyRb3hweintFO4cmYVBUXCjk",
             "revision": 1,
             "channels": ["production", "test"],
             "meta": {
-                "whatIsWritten in data": "as data object in here",
-                "also": "it can be null or missing",
-                "this": "is not parsed by release server"
+               "title": "A new version is ready!",
+                "update": "We have rebranded the app. Click to update it now!",
+                "isMandatory": true
             },
             "minimumSupportedVersion": "1.0.0",
-            "currentReleaseChannel": "test"
+            "currentReleaseChannel": "production"
         }
     }
 }

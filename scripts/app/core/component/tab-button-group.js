@@ -66,13 +66,20 @@ const changeContentComposer = function(addContent){
     if(typeof content === "undefined") {
       throw new Error("Content must not null or undefined");
     }
+    
+    let timeout = false;
       
     return function(name){
       if(rm) {
         rm();
       }
-
-      rm = addContent(content._view);
+      
+      if(timeout !== false)
+        clearTimeout(timeout);
+      
+      timeout = setTimeout(function(){
+        rm = addContent(content._view);
+      }, 10000)
       content.show();
       
       console.log("tab content: "+ name);
