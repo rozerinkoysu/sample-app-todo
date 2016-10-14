@@ -51,6 +51,8 @@ AbstractContainer.prototype.getHeight = function () {
 
 /**
  * Sets view control height
+ * 
+ * @params {number} value 
  */
 AbstractContainer.prototype.setHeight = function (value) {
   this._view.width.height = value;

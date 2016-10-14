@@ -6,6 +6,7 @@ const AbstractContainer = require("./abstract-component.js");
  * @class
  * @abstract
  * @version 1.0.0
+ * @augments AbstractContainer
  */
 const Component = function(params) {
   AbstractContainer.apply(this);

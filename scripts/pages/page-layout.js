@@ -160,8 +160,13 @@ const PageLayout = function(params) {
   lastMonthButton.font.size    = "7pt";
   lastMonthButton.font.family  = "Roboto";
 
-  tabButtons.add(lastWeekButton, new TaskStatisticsContent(TodoStore.findByLastWeek("completionDate")), "lastWeekButton", true);
-  tabButtons.add(lastMonthButton, new TaskStatisticsContent(TodoStore.findByLastMonth("completionDate")), "lastMonthButton");
+  tabButtons.add(lastWeekButton
+    , new TaskStatisticsContent(TodoStore.findByLastWeek("completionDate"))
+    , "lastWeekButton"
+    , true);
+  tabButtons.add(lastMonthButton
+  , new TaskStatisticsContent(TodoStore.findByLastMonth("completionDate"))
+  , "lastMonthButton");
 
   const deleteTabButtonTouch = tabButtons
     .changeHandler()

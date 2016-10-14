@@ -6,7 +6,7 @@ const AbstractContainer = require("./abstract-component.js");
  * @class PageBase
  * @abstract
  * @version 1.0.0
- * 
+ * @augments AbstractContainer
  * Abstract Native Page Control Wrapping CLass
  */
 var PageBase = function(params) {
@@ -20,10 +20,11 @@ var PageBase = function(params) {
   this._view = new SMF.UI.Page(params);
 };
 
+// Extends from AbstractContainer
 PageBase.prototype = Object.create(AbstractContainer.prototype);
 
 /**
- * Returns background url of native page
+ * Returns background url of the page control
  * 
  * @returns {string}
  */

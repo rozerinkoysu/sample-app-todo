@@ -162,7 +162,7 @@ const tabChanger = function(underline) {
       current = btn;
     }
     /**
-     * Start tab button animation and trigger block component state changing
+     * Starts tab button animation and when animation is completed then changes block component's state
      *
      */
     return function(e) {

@@ -132,7 +132,7 @@ const TabButtonGroup = function(params, tabButtonsContainerProps, contentContain
 
 TabButtonGroup.prototype.changeTab = function(index){
   
-}
+};
 
 // Extends from Component Class
 TabButtonGroup.prototype = Object.create(Component.prototype);
@@ -163,7 +163,7 @@ TabButtonGroup.prototype.add = function(button, content, name, isSelected){
  * @returns {Rx.Observable}
  */
 TabButtonGroup.prototype.changeHandler = function(){
-  // triggers stream When user presses button is not selected
+  // triggers stream When user presses button which is not selected.
   return this
     ._change$
     .distinctUntilChanged()

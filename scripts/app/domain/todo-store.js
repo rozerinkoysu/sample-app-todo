@@ -145,7 +145,7 @@ TodoStore.findByLastMonth = function(fieldName) {
           return data[fieldName]
             && moment().diff(moment(data[fieldName]), "months") == 0;
           // moment(data.completionDate).subtract()
-        })
+        });
   };
 };
 
@@ -217,7 +217,7 @@ TodoStore.add = function(newData) {
 
   data = [newData].concat(data);
   
-  _changeHandler$.onNext();
+  _changeHandler$.onNext(newData.id);
   
   return newData.id;
 };

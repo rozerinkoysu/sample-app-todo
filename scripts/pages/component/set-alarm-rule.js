@@ -4,8 +4,8 @@ const moment = require("../../libs/moment.js");
 const TodoService = require("../../app/domain/todo-service.js");
 const SMFConsole = require("../../app/core/log.js");
 
-const SetAlarmRule = function(params, rule, isEdiable){
-  isEdiable = !!isEdiable;
+const SetAlarmRule = function(params, rule, isEditable){
+  isEditable = !!isEditable;
   
   params = Object.assign(
       params
@@ -73,26 +73,26 @@ const SetAlarmRule = function(params, rule, isEdiable){
     , touchEnabled: false
   });
   
-  const changeState = function(rule, isEdiable) {
-    isEdiable = !!isEdiable;
+  const changeState = function(rule, isEditable) {
+    isEditable = !!isEditable;
     alarmIcon.image = rule ? "bell_detail" : "add_new_bell.png";
     arrow.image     = rule ? "Submit_detail.png" : "Submit.png";
     lbl.text        = rule ? TodoService.dateToCalendarText(rule) : "Add Reminder";
     lbl.fontColor   = rule ? "#33C06F" : "#8F8F8F";
     
-    this._view.onTouch = isEdiable ? alarmEdit.bind(this) : function(){};
+    this._view.onTouch = isEditable ? alarmEdit.bind(this) : function(){};
   };
   
   
-  this.setProps = function(rule, isEdiable) {
-    changeState.apply(this, [rule, isEdiable]);
+  this.setProps = function(rule, isEditable) {
+    changeState.apply(this, [rule, isEditable]);
   };
   
   this.onChange = function() {
     return changeHandler$.share();
   };
   
-  changeState.apply(this, [rule, isEdiable]);
+  changeState.apply(this, [rule, isEditable]);
   
   this.add(alarmIcon);
   this.add(lbl);
