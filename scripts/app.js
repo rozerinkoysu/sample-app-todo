@@ -85,7 +85,9 @@ function checkforUpdate() {
  * @this Application
  */
 function Application_OnStart(e) {
-	checkforUpdate();
+	setTimeout(function(){
+		checkforUpdate();
+	}, 10000);
 	//initializes require
 	initRequire("./main.js");
 }

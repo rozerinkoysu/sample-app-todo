@@ -1,10 +1,10 @@
 <ApplicationPackageLicenses>
     <ApplicationPackageLicense>
-        <CompanyName>Smartface User</CompanyName>
-        <LicenseName>To Do </LicenseName>
+        <CompanyName>Smartface Inc.</CompanyName>
+        <LicenseName>To Do</LicenseName>
         <SASVersion>v5.0.0</SASVersion>
-        <CreateDate>05.09.2016 15:31:43</CreateDate>
-        <ExpireDate>03.09.2026 15:31:43</ExpireDate>
+        <CreateDate>01.09.2016 16:35:52</CreateDate>
+        <ExpireDate>06.09.2026 16:35:52</ExpireDate>
         <LicenseType>Professional</LicenseType>
         <PackageType>iOS</PackageType>
         <PackageName>io.smartface.sample.todo</PackageName>
@@ -18,11 +18,11 @@
         <SignData></SignData>
     </ApplicationPackageLicense>
     <ApplicationPackageLicense>
-        <CompanyName>Smartface User</CompanyName>
-        <LicenseName>To Do </LicenseName>
+        <CompanyName>Smartface Inc.</CompanyName>
+        <LicenseName>To Do</LicenseName>
         <SASVersion>v5.0.0</SASVersion>
-        <CreateDate>05.09.2016 15:31:43</CreateDate>
-        <ExpireDate>03.09.2026 15:31:43</ExpireDate>
+        <CreateDate>01.09.2016 16:35:52</CreateDate>
+        <ExpireDate>06.09.2026 16:35:52</ExpireDate>
         <LicenseType>Professional</LicenseType>
         <PackageType>Android</PackageType>
         <PackageName>io.smartface.sample.todo</PackageName>

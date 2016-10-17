@@ -1,11 +1,11 @@
 {
 	"info": {
-		"name": "To Do ",
-		"company": "Smartface User",
+		"name": "To Do",
+		"company": "Smartface Inc.",
 		"webSite": "https://www.smartface.io",
 		"version": "1.0.0",
 		"runtimeVersion": "1100",
-		"description": "This is Smartface's default empty project. You can click to Run on Device button to see it on your device."
+		"description": "This application is a showcase of Smartface.io mobile application development platform."
 	},
 	"config": {
 		"cache": {

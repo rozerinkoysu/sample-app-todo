@@ -74,16 +74,19 @@ const changeContentComposer = function(addContent){
         rm();
       }
       
-      if(timeout !== false)
-        clearTimeout(timeout);
+      // if(timeout !== false)
+        // clearTimeout(timeout);
       
       // Android children update hack
-      timeout = setTimeout(function(){
+      if(Device.OS == "Android"){
+        timeout = setTimeout(function(){
+          rm = addContent(content._view);
+          content.show();
+        }, 20);
+      } else {
         rm = addContent(content._view);
         content.show();
-      }, 50);
-      
-      console.log("tab content: "+ name);
+      }
     };
   };
 };
