@@ -64,8 +64,8 @@ const AndroidProxy = function(actionBar){
 
       return new NullProperty();
     }
-  }
-}
+  };
+};
 
 /**
  * Proxies to native nvigationbar component of ios

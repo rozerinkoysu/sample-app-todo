@@ -67,7 +67,7 @@ const changeContentComposer = function(addContent){
       throw new Error("Content must not null or undefined");
     }
     
-    let timeout = false;
+    var timeout = false;
       
     return function(name){
       if(rm) {

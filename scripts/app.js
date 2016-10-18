@@ -85,11 +85,12 @@ function checkforUpdate() {
  * @this Application
  */
 function Application_OnStart(e) {
+	initRequire("./main.js");
+
 	setTimeout(function(){
 		checkforUpdate();
 	}, 10000);
 	//initializes require
-	initRequire("./main.js");
 }
 
 function Application_OnError(e) {
