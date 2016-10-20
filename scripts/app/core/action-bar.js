@@ -123,7 +123,16 @@ const iOSProxy = function(navigationBar, page){
  */
 const runOnAndroid = function(page, options) {
   const actionBarProxy = new AndroidProxy(page.actionBar);
-  var mapper = Object.keys(options).map(assignKeys(actionBarProxy, options, "ios", "android"));
+  var mapper = Object
+    .keys(options)
+    .map(
+      assignKeys(
+        actionBarProxy, 
+        options, 
+        "ios", 
+        "android"
+      ));
+      
   mapper = flatMap(mapper);
 
   return {
@@ -136,8 +145,12 @@ const runOnAndroid = function(page, options) {
     , reset: function(){
       Object
         .keys(ActionBarWrapper.options)
-        .forEach(
-          assignKeys(actionBarProxy, ActionBarWrapper.options, "ios", "android"));
+        .forEach(assignKeys(
+          actionBarProxy, 
+          ActionBarWrapper.options, 
+          "ios", 
+          "android"
+        ));
     }
     , reload: function(){
       mapper.map(function(f){
@@ -148,7 +161,13 @@ const runOnAndroid = function(page, options) {
       newOptions = Object.assign({}, newOptions);
       Object
         .keys(options)
-        .map(assignKeys(actionBarProxy, options, "ios", "android"));
+        .map(assignKeys(
+          actionBarProxy, 
+          options, 
+          "ios", 
+          "android"
+        ));
+        
       options = Object.assign(options, newOptions);
     }
   };
@@ -172,7 +191,15 @@ const flatMap = function(map){
  */
 const runOniOS = function(page, options) {
   var navigationProxy = new iOSProxy(SMF.UI.iOS.NavigationBar, page);
-  var mapper = Object.keys(options).map(assignKeys(navigationProxy, options, "android", "ios"));
+  var mapper = Object
+  .keys(options)
+  .map(assignKeys(
+    navigationProxy, 
+    options, 
+    "android", 
+    "ios"
+  ));
+  
   mapper = flatMap(mapper);
   
   return {
@@ -185,7 +212,12 @@ const runOniOS = function(page, options) {
       Object
         .keys(ActionBarWrapper.options)
         .forEach(
-          assignKeys(navigationProxy, ActionBarWrapper.options, "android", "ios"));
+          assignKeys(
+            navigationProxy, 
+            ActionBarWrapper.options, 
+            "android", 
+            "ios"
+          ));
     }
     , reload: function(){
       mapper.map(function(f){
@@ -196,7 +228,14 @@ const runOniOS = function(page, options) {
       newOptions = Object.assign({}, newOptions);
       Object
         .keys(options)
-        .forEach(assignKeys(navigationProxy, options, "android", "ios"));
+        .forEach(
+          assignKeys(
+            navigationProxy, 
+            options, 
+            "android", 
+            "ios"
+          ));
+          
       options = Object.assign(options, newOptions);
     }
   };
