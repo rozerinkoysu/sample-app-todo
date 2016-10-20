@@ -5,7 +5,7 @@
             "hashType": "md5",
             "profileKey": "2qh1RVOzCyRb3hweintFO4cmYVBUXCjk",
             "revision": 1,
-            "channels": ["production", "test"],
+            "channels": ["production","test"],
             "meta": {
                "title": "A new version is ready!",
                 "update": "We have rebranded the app. Click to update it now!",

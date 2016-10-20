@@ -1,21 +1,22 @@
 const SMFConsole = require('./log.js');
 
 /** @type {SMF.UI.iOS.NavigationBar | SMF.UI.Page.actionBar}*/
-
 const assignKeys = function(source, options, ignoreKey, hasKeyThenReload) {
   return function(key) {
     // alert(options[key]);
     if(key != ignoreKey) {
       if(key != hasKeyThenReload && source.hasProp(key)) {
-        source.set(key,  options[key]);
+        return function(){source.set(key,  options[key])};
       } else if(key == hasKeyThenReload) {
-        Object.keys(options[key]).forEach(assignKeys(source, options[key], "ios", "android"));
+        return Object.keys(options[key]).map(assignKeys(source, options[key], "ios", "android"));
       } else {
         throw new Error("Option ["+key+"] is not found");
       }
     }
   };
 };
+
+
 
 /**
  * NullObject pattern implementation
@@ -122,6 +123,9 @@ const iOSProxy = function(navigationBar, page){
  */
 const runOnAndroid = function(page, options) {
   const actionBarProxy = new AndroidProxy(page.actionBar);
+  var mapper = Object.keys(options).map(assignKeys(actionBarProxy, options, "ios", "android"));
+  mapper = flatMap(mapper);
+
   return {
     unload: function(){
       this.reset();
@@ -136,18 +140,28 @@ const runOnAndroid = function(page, options) {
           assignKeys(actionBarProxy, ActionBarWrapper.options, "ios", "android"));
     }
     , reload: function(){
-      Object
-        .keys(options)
-        .forEach(assignKeys(actionBarProxy, options, "ios", "android"));
+      mapper.map(function(f){
+        f();
+      })
     }
     , update: function(newOptions){
       newOptions = Object.assign({}, newOptions);
       Object
         .keys(options)
-        .forEach(assignKeys(actionBarProxy, options, "ios", "android"));
+        .map(assignKeys(actionBarProxy, options, "ios", "android"));
       options = Object.assign(options, newOptions);
     }
   };
+};
+
+const flatMap = function(map){
+  return map.reduce(function(acc, m){
+    if(Array.isArray(m)){
+      return acc.concat(m);
+    } 
+    acc.push(m);
+    return acc;
+  }, []);
 };
 
 /**
@@ -158,6 +172,9 @@ const runOnAndroid = function(page, options) {
  */
 const runOniOS = function(page, options) {
   var navigationProxy = new iOSProxy(SMF.UI.iOS.NavigationBar, page);
+  var mapper = Object.keys(options).map(assignKeys(navigationProxy, options, "android", "ios"));
+  mapper = flatMap(mapper);
+  
   return {
     unload: function(){
       this.reset();
@@ -171,9 +188,9 @@ const runOniOS = function(page, options) {
           assignKeys(navigationProxy, ActionBarWrapper.options, "android", "ios"));
     }
     , reload: function(){
-      Object
-        .keys(options)
-        .forEach(assignKeys(navigationProxy, options, "android", "ios"));
+      mapper.map(function(f){
+        f();
+      })
     }
     , update: function(newOptions){
       newOptions = Object.assign({}, newOptions);
