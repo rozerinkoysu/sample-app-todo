@@ -6,7 +6,7 @@ const Router         = require("./app/core/router.js");
 
 
 
-// Defines routes of application pages
+// Define routes of application pages
 Router.add(
       "todo/new"
     , NewTodoPage

@@ -102,7 +102,7 @@ const TasksBlock = function() {
     , top: "32%"
     , left: 0
   });
-  // and add to current component as a child
+  // and add current component as a child
   this.add(todayBar);
   
   // console.log(TodoStore)

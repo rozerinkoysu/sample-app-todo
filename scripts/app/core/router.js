@@ -25,7 +25,7 @@ Router.__routes = [];
  * Application Routing history cache
  * 
  * @class RouteHistory
- * @version 1.0.0
+ * @version 1.0.1
  */
 const RouteHistory = function() {
   var head = 0;
@@ -57,12 +57,8 @@ const RouteHistory = function() {
    * @param {String} path Routing path
    * @param {Object} params Routing data
    */
-  this.push = function(path, params) {
-    cache.push({
-      path: path,
-      params: params
-    });
-    
+  this.push = function(route) {
+    cache.push(route);
     head++;
   };
   
@@ -158,22 +154,27 @@ Router.go = function(path, params) {
   
   if(route.type){
     var page;
-    if(!(page = this.__history.getHistoryByPath(path)) ) {
-      page = new route.type(params);
-      const instance = page;
-      
-      this
-        .__history
-        .push({
-          path
-          , params
-          , instance
-        });
-    }
     
+    if(typeof route.instance === "undefined"){
+      page = new route.type(params);
+      route.instance = page;
+    } else {
+      page = route.instance;
+    }
+
+    this.__history
+      .push({
+        path, 
+        params,
+        instance: route.instance
+      });
+
     page.setRouteParams(params);
     page.show.apply(page, route.transitionParams());
-
+    
+    return page;
+    // (SMF.UI.MotionEase.DECELERATING, SMF.UI.TransitionEffect.RIGHTTOLEFT, SMF.UI.TransitionEffectType.REVEAL,false,false)
+    // .apply(page, route.transitionParams());
   } else {
     throw new Error("[ Router ] Page cannot be found on path : "+path);
   }
