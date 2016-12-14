@@ -1,6 +1,15 @@
-## Smartface.io Platform Official Todo Application Example
+<h3 align="center">
+  <img height=75 src="https://github.com/rozerinkoysu/sample-app-todo/blob/master/temp/smartface_logo.png" alt="smartface Logo" />
+</h3>
 
-![Home Page](/docs/images/home.png) ![New Todo Page](/docs/images/new_todo.png)
+# Todo Application from Smartface
+[![Twitter: @Smartface_io](https://img.shields.io/badge/contact-@Smartface_io-blue.svg?style=flat)](https://twitter.com/smartface_io)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/smartface/sample-app-todo/blob/master/LICENSE)
+
+Todo Application from Smartface is a sample app to demonstrate Smartface and Oracle MCS integration. You can freely use the code in your apps.
+
+<img width=250 src="https://github.com/rozerinkoysu/sample-app-todo/blob/master/temp/home.PNG">
+<img width=250 src="https://github.com/rozerinkoysu/sample-app-todo/blob/master/new_todo.PNG">
 
 ### Application Skeleton
 - App.js
@@ -39,5 +48,27 @@ There is a unidirectional data flow between views and stores. Stores and views a
 ### Stores ###
 Stores contain the application state and logic. Their role is somewhat similar to a model in a traditional MVC, but they manage the state of many objects. Stores manage the application state for a particular domain within the application.
 
-### Installation ###
-[Start with smartface](https://smartface.atlassian.net/wiki/pages/viewpage.action?pageId=8486965)
+## Dependencies
+
+This repository depends on [smartface.io](https://smartface.io) runtime.
+You need to clone this repository inside a [**Smartface.io Cloud IDE Workspace**](https://cloud.smartface.io/Home/Index)
+
+## Need Help?
+
+Please [submit an issue](https://github.com/smartface/sample-app-todo/issues) on GitHub and provide information about your problem.
+
+## Support & Documentation & Useful Links
+- [Guides](https://www.smartface.io/guides)
+- [API Docs](https://docs.smartface.io)
+- [Smartface Cloud Dashboard](https://cloud.smartface.io)
+- [Download Smartface On-Device Emulator](https://smf.to/app) (Works only from your device)
+
+## Code of Conduct
+We are committed to making participation in this project a harassment-free experience for everyone, regardless of the level of experience, gender, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, religion, or nationality.
+Please read and follow our [Code of Conduct](https://github.com/smartface/sample-self-service/blob/master/CODE_OF_CONDUCT.md).
+
+## License
+
+This project is licensed under the terms of the MIT license. See the [LICENSE](LICENSE) file.
+
+
