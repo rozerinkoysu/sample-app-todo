@@ -8,8 +8,7 @@
 
 To-Do application from Smartface is a sample app to demonstrate how to use Smartface objects according to [js-base](https://github.com/smartface/js-base). You can freely use the code in your apps.
 
-![alt tag](https://github.com/rozerinkoysu/sample-app-todo/blob/master/home_.png)
-
+![alt tag](https://github.com/rozerinkoysu/sample-app-todo/blob/master/temp/home_.png)
 ![alt tag](https://github.com/rozerinkoysu/sample-app-todo/blob/master/temp/new_todo.png)
 
 ### Application Skeleton
